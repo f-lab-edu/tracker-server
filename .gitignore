@@ -1,0 +1,15 @@
+# node
+node_modules
+#빌드 결과
+dist
+#환경변수
+.env
+# OS 파일
+.DS_Store
+
+# 빌드 결과물 및 캐시
+*.log
+*.tsbuildinfo
+*.yml
+
+
