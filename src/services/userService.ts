@@ -1,6 +1,6 @@
-import { v4 as uuidv4 } from 'uuid';
 import { UserInfoModel } from '../models/userModel';
 interface CreateUserInfo {
+  userId: string;
   page: string;
   userPrevPage: string;
   userAccessTime: string;
@@ -15,8 +15,7 @@ interface CreateUserInfo {
 
 export const userInfoService = {
   createUserInfo: async (data: CreateUserInfo) => {
-    const userId = uuidv4();
-    const userInfo = await UserInfoModel.create({ ...data, userId });
+    const userInfo = await UserInfoModel.create({ ...data });
     return userInfo;
   },
 

@@ -1,7 +1,7 @@
 import express from 'express';
 import { userInfoController } from '../controllers/userController';
 
-export const router = express.Router();
+export const userInfoRouter = express.Router();
 
-router.post('/userInfo', userInfoController.createUserInfo);
-router.get('/userInfo', userInfoController.getUserInfo);
+userInfoRouter.post('/userInfo', userInfoController.createUserInfo);
+userInfoRouter.get('/userInfo', userInfoController.getUserInfo);
