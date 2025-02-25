@@ -19,4 +19,9 @@ export const userInfoService = {
     const userInfo = await UserInfoModel.create({ ...data, userId });
     return userInfo;
   },
+
+  getUserInfo: async () => {
+    const getUserInfo = await UserInfoModel.findAll();
+    return getUserInfo;
+  },
 };
