@@ -1,15 +1,8 @@
-import { UserInfoModel } from '../models/userModel';
+import { UserInfoModel } from '../models/userInfoModel';
 interface CreateUserInfo {
   userId: string;
-  page: string;
-  userPrevPage: string;
-  userAccessTime: string;
-  userBrowser: string;
-  userOs: string;
-  userCountry: string;
-  userIsMobile: boolean;
-  userResolution: string;
-  userLanguage: string;
+  Country: string;
+  Language: string;
   event: string;
 }
 

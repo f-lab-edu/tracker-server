@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { userInfoService } from '../services/userService';
+import { userInfoService } from '../services/userInfoService';
 
 export const userInfoController = {
   createUserInfo: async (req: Request, res: Response) => {
