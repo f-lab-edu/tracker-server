@@ -1,8 +1,8 @@
 import { UserInfoModel } from '../models/userInfoModel';
 interface CreateUserInfo {
   userId: string;
-  Country: string;
-  Language: string;
+  country: string;
+  language: string;
   event: string;
 }
 
