@@ -13,8 +13,8 @@ UserInfo.init(
   },
   {
     sequelize,
-    modelName: 'UserInfo',
-    tableName: 'UserInfo',
+    modelName: 'userInfo',
+    tableName: 'userInfo',
     timestamps: true,
   }
 );

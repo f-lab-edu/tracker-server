@@ -13,8 +13,8 @@ Heartbeat.init(
   },
   {
     sequelize,
-    modelName: 'HeartBeat',
-    tableName: 'HeartBeat',
+    modelName: 'heartbeat',
+    tableName: 'heartbeat',
     timestamps: true,
   }
 );

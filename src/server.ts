@@ -1,7 +1,7 @@
 import cors from 'cors';
 import express from 'express';
-import { userInfoRouter } from './routes/userInfoRoutes';
 import { heartbeatRouter } from './routes/heartbeatRoutes';
+import { userInfoRouter } from './routes/userInfoRoutes';
 
 const app = express();
 const port = 3000;
