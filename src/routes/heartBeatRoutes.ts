@@ -1,6 +1,7 @@
 import express from 'express';
-import { heartBeatController } from '../controllers/heartBeatController';
+import { heartbeatController } from '../controllers/heartbeatController';
 
-export const hearBeatRouter = express.Router();
+export const heartbeatRouter = express.Router();
 
-hearBeatRouter.post('/heartBeat', heartBeatController.sendStatus);
+heartbeatRouter.post('/heartbeat', heartbeatController.handleHeartbeat);
+heartbeatRouter.get('/onlineUsersCount', heartbeatController.getOnlineUsersCount);

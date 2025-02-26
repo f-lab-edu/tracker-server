@@ -1,16 +1,15 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../config/db';
 
-class HeartBeat extends Model {}
+class Heartbeat extends Model {}
 
-HeartBeat.init(
+Heartbeat.init(
   {
     id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
     userId: { type: DataTypes.STRING, allowNull: false },
-    page: { type: DataTypes.STRING, allowNull: false },
-    timestamps: { type: DataTypes.STRING, allowNull: false },
+    firstOnlineTime: { type: DataTypes.DATE, allowNull: false },
+    lastUpdateTime: { type: DataTypes.DATE, allowNull: false },
     status: { type: DataTypes.STRING, allowNull: false },
-    event: { type: DataTypes.STRING, allowNull: false },
   },
   {
     sequelize,
@@ -20,4 +19,4 @@ HeartBeat.init(
   }
 );
 
-export const HeartBeatModel = HeartBeat;
+export const heartbeatModel = Heartbeat;
