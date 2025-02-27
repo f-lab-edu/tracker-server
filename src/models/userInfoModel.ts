@@ -7,14 +7,19 @@ UserInfo.init(
   {
     id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
     userId: { type: DataTypes.STRING, allowNull: false },
-    country: { type: DataTypes.STRING, allowNull: true },
+    domain: { type: DataTypes.STRING, allowNull: false },
+    country: { type: DataTypes.STRING, allowNull: false },
     language: { type: DataTypes.STRING, allowNull: false },
-    event: { type: DataTypes.STRING, allowNull: true },
+    isVisitedUser: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
   },
   {
     sequelize,
-    modelName: 'UserInfo',
-    tableName: 'UserInfo',
+    modelName: 'userInfo',
+    tableName: 'userInfos',
     timestamps: true,
   }
 );
