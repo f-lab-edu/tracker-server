@@ -2,6 +2,7 @@ import cors from 'cors';
 import express from 'express';
 import { errorHandle } from './middleware/errorhandle';
 import { heartbeatRouter } from './routes/heartbeatRoutes';
+import { userActionRouter } from './routes/userActionRoutes';
 import { userDeviceRouter } from './routes/userDeviceRoutes';
 import { userInfoRouter } from './routes/userInfoRoutes';
 import { userPageInfoRouter } from './routes/userPageInfoRoutes';
@@ -15,6 +16,7 @@ app.use(userInfoRouter);
 app.use(heartbeatRouter);
 app.use(userPageInfoRouter);
 app.use(userDeviceRouter);
+app.use(userActionRouter);
 app.use(errorHandle);
 
 app.listen(port, () => {
