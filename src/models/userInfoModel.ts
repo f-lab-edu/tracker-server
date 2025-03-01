@@ -19,7 +19,7 @@ UserInfo.init(
   {
     sequelize,
     modelName: 'userInfo',
-    tableName: 'userInfos',
+    tableName: 'userInfo',
     timestamps: true,
   }
 );
