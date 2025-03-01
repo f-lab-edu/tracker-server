@@ -10,16 +10,12 @@ UserInfo.init(
     domain: { type: DataTypes.STRING, allowNull: false },
     country: { type: DataTypes.STRING, allowNull: false },
     language: { type: DataTypes.STRING, allowNull: false },
-    isVisitedUser: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false,
-    },
+    visitedCount: { type: DataTypes.NUMBER, allowNull: false, defaultValue: 1 },
   },
   {
     sequelize,
     modelName: 'userInfo',
-    tableName: 'userInfos',
+    tableName: 'userInfo',
     timestamps: true,
   }
 );
