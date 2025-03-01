@@ -7,9 +7,10 @@ UserInfo.init(
   {
     id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
     userId: { type: DataTypes.STRING, allowNull: false },
-    country: { type: DataTypes.STRING, allowNull: true },
+    domain: { type: DataTypes.STRING, allowNull: false },
+    country: { type: DataTypes.STRING, allowNull: false },
     language: { type: DataTypes.STRING, allowNull: false },
-    event: { type: DataTypes.STRING, allowNull: true },
+    visitedCount: { type: DataTypes.NUMBER, allowNull: false, defaultValue: 1 },
   },
   {
     sequelize,

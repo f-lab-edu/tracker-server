@@ -1,5 +1,6 @@
 import cors from 'cors';
 import express from 'express';
+
 import { errorHandle } from './middleware/errorhandle';
 import { heartbeatRouter } from './routes/heartbeatRoutes';
 import { userDeviceRouter } from './routes/userDeviceRoutes';
