@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { userPageInfoService } from '../services/userPageService';
+import { userPageInfoService } from '../services/userPageInfoService';
 
 export const userPageInfoController = {
   saveReferrer: async (req: Request, res: Response) => {
@@ -16,7 +16,7 @@ export const userPageInfoController = {
     try {
       const domain = req.params.domain;
       const referrerStatus = await userPageInfoService.getReferrerStats(domain);
-      res.status(201).json(referrerStatus);
+      res.status(200).json(referrerStatus);
     } catch (err) {
       console.error(err);
       res.status(500).json({ message: '서버 내부 오류' });
@@ -46,7 +46,17 @@ export const userPageInfoController = {
 
   savePageViewCount: async (req: Request, res: Response) => {
     try {
-      const updatedVisitCount = await userPageInfoService.savePageViewCount(req.body);
+      const { domain, url } = req.body;
+      if (!domain || !url) {
+        return res.status(400).json({ message: 'domain과 url은 필수입니다.' });
+      }
+      const today = new Date().toISOString().split('T')[0];
+      const updatedVisitCount = await userPageInfoService.savePageViewCount({
+        domain,
+        url,
+        date: today,
+      });
+
       res.status(200).json({ message: '페이지 방문 횟수 저장 완료', data: updatedVisitCount });
     } catch (err) {
       console.error(err);
@@ -57,7 +67,15 @@ export const userPageInfoController = {
   getPageViewCount: async (req: Request, res: Response) => {
     try {
       const domain = req.params.domain;
-      const pageViewCounts = await userPageInfoService.getPageViewCounts(domain);
+      const { startDate, endDate } = req.query;
+      if (typeof startDate !== 'string' || typeof endDate !== 'string') {
+        return res.status(400).json({ message: '시작 날짜와 종료날짜 올바르게 입력하세요' });
+      }
+      const pageViewCounts = await userPageInfoService.getPageViewCounts(
+        domain,
+        startDate,
+        endDate
+      );
       res.status(200).json(pageViewCounts);
     } catch (err) {
       console.error(err);

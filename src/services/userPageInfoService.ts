@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import sequelize from '../config/db';
 import { UserPageInfoModel } from '../models/userPageInfoModel';
 
@@ -18,6 +19,7 @@ interface PageLoadInfo {
 interface PageViewCountInfo {
   domain: string;
   url: string;
+  date: string;
 }
 
 export const userPageInfoService = {
@@ -72,24 +74,35 @@ export const userPageInfoService = {
   },
 
   savePageViewCount: async (data: PageViewCountInfo) => {
+    const { domain, url, date } = data;
     const existingRecord = await UserPageInfoModel.findOne({
-      where: { domain: data.domain, url: data.url },
+      where: { domain, url, date },
     });
     if (existingRecord) {
       return await UserPageInfoModel.update(
         { visitCount: sequelize.literal('visitCount + 1') },
-        { where: { domain: data.domain, url: data.url } }
+        { where: { domain, url, date } }
       );
     } else {
-      return await UserPageInfoModel.create({ ...data, visitCount: 1 });
+      return await UserPageInfoModel.create({ domain, url, visitCount: 1, date });
     }
   },
 
-  getPageViewCounts: async (domain: string) => {
+  getPageViewCounts: async (domain: string, startDate: string, endDate: string) => {
     return await UserPageInfoModel.findAll({
-      where: { domain },
-      attributes: ['pageUrl', [sequelize.fn('COUNT', '*'), 'visitCount']],
-      group: ['pageUrl'],
+      where: {
+        domain,
+        date: {
+          [Op.between]: [startDate, endDate],
+        },
+      },
+      attributes: [
+        'pageUrl',
+        'date',
+        [sequelize.fn('SUM', sequelize.col('visitCount')), 'visitCount'],
+      ],
+      group: ['pageUrl', 'date'],
+      order: [['date', 'ASC']],
       raw: true,
     });
   },
