@@ -1,5 +1,6 @@
 import express from 'express';
 import { heartbeatController } from '../controllers/heartbeatController';
+import { userActionController } from '../controllers/userActionController';
 import { userDeviceController } from '../controllers/userDeviceController';
 import { userInfoController } from '../controllers/userInfoController';
 import { userPageInfoController } from '../controllers/userPageInfoController';
@@ -29,3 +30,11 @@ dashBoardRouter.get(
   userPageInfoController.getAveragePageLoadTime
 );
 dashBoardRouter.get('/domains/:domain/pageInfo/visit', userPageInfoController.getPageViewCount);
+dashBoardRouter.get(
+  '/domains/:domain/userAction/getPerPageAverageScrollDepth',
+  userActionController.getPerPageAverageScrollDepth
+);
+dashBoardRouter.get(
+  '/domains/:domain/userAction/getBounceRate',
+  userActionController.getBounceRate
+);
