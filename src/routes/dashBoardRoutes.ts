@@ -29,12 +29,23 @@ dashBoardRouter.get(
   '/domains/:domain/pageInfo/loadTime',
   userPageInfoController.getAveragePageLoadTime
 );
-dashBoardRouter.get('/domains/:domain/pageInfo/visit', userPageInfoController.getPageViewCount);
 dashBoardRouter.get(
-  '/domains/:domain/userAction/getPerPageAverageScrollDepth',
+  '/domains/:domain/pageInfo/visitorsPageByPeriodCount',
+  userPageInfoController.getPageViewCount
+);
+dashBoardRouter.get(
+  '/domains/:domain/userAction/PerPageAverageScrollDepth',
   userActionController.getPerPageAverageScrollDepth
 );
 dashBoardRouter.get(
   '/domains/:domain/userAction/getBounceRate',
   userActionController.getBounceRate
+);
+dashBoardRouter.get(
+  `/domains/:domain/pageInfo/visitorsByPeriodCount`,
+  userPageInfoController.getVisitorsByPeriod
+);
+dashBoardRouter.get(
+  `/domains/:domain/pageInfo/totalVisitorsCount`,
+  userPageInfoController.getTotalVisitors
 );

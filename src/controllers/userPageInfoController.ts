@@ -51,7 +51,28 @@ export const userPageInfoController = {
       res.status(400).json({ message: '시작 날짜와 종료날짜 올바르게 입력하세요' });
       return;
     }
-    const pageViewCounts = await userPageInfoService.getPageViewCounts(domain, startDate, endDate);
+    const pageViewCounts = await userPageInfoService.getPerPageViewCounts(
+      domain,
+      startDate,
+      endDate
+    );
     res.status(200).json(pageViewCounts);
+  }),
+
+  getVisitorsByPeriod: wrapAsync(async (req: Request, res: Response) => {
+    const { domain } = req.params;
+    const { startDate, endDate } = req.query;
+    if (typeof startDate !== 'string' || typeof endDate !== 'string') {
+      res.status(400).json({ message: 'startDate와 endDate는 필수입니다.' });
+      return;
+    }
+    const visitorsData = await userPageInfoService.getPerVisitorCounts(domain, startDate, endDate);
+    res.status(200).json(visitorsData);
+  }),
+
+  getTotalVisitors: wrapAsync(async (req: Request, res: Response) => {
+    const { domain } = req.params;
+    const totalVisitorsData = await userPageInfoService.getTotalVisitors(domain);
+    res.status(200).json(totalVisitorsData);
   }),
 };
