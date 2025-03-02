@@ -48,7 +48,7 @@ export const userPageInfoController = {
     try {
       const { domain, url } = req.body;
       if (!domain || !url) {
-        return res.status(400).json({ message: 'domain과 url은 필수입니다.' });
+        res.status(400).json({ message: 'domain과 url은 필수입니다.' });
       }
       const today = new Date().toISOString().split('T')[0];
       const updatedVisitCount = await userPageInfoService.savePageViewCount({
@@ -69,7 +69,8 @@ export const userPageInfoController = {
       const domain = req.params.domain;
       const { startDate, endDate } = req.query;
       if (typeof startDate !== 'string' || typeof endDate !== 'string') {
-        return res.status(400).json({ message: '시작 날짜와 종료날짜 올바르게 입력하세요' });
+        res.status(400).json({ message: '시작 날짜와 종료날짜 올바르게 입력하세요' });
+        return;
       }
       const pageViewCounts = await userPageInfoService.getPageViewCounts(
         domain,
