@@ -11,7 +11,6 @@ app.use(cors());
 app.use(express.json());
 app.use(dashBoardRouter);
 app.use(trackerSdkRouter);
-
 app.use(errorHandle);
 
 app.listen(port, () => {
