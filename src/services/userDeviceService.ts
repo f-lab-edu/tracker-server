@@ -2,8 +2,8 @@ import sequelize from '../config/db';
 import { UserDeviceModel } from '../models/userDeviceModel';
 
 interface UserDeviceInfo {
-  userId: string;
   domain: string;
+  userId: string;
   browser: string;
   isMobile: string;
   os: string;

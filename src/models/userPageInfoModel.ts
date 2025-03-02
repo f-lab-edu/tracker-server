@@ -5,8 +5,7 @@ class UserPageInfo extends Model {}
 
 UserPageInfo.init(
   {
-    id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
-    userId: { type: DataTypes.STRING, allowNull: false },
+    userId: { type: DataTypes.STRING, allowNull: false, primaryKey: true },
     domain: { type: DataTypes.STRING, allowNull: false },
     referrer: { type: DataTypes.STRING, allowNull: true },
     url: { type: DataTypes.STRING, allowNull: false },
@@ -17,7 +16,7 @@ UserPageInfo.init(
   {
     sequelize,
     modelName: 'userPageInfo',
-    tableName: 'userPageInfo',
+    tableName: 'userPageInfos',
     timestamps: true,
   }
 );

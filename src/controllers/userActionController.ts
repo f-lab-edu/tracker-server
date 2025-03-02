@@ -4,13 +4,15 @@ import { wrapAsync } from '../utils/wrapAsync';
 
 export const userActionController = {
   saveUserScrollDepth: wrapAsync(async (req: Request, res: Response) => {
-    await userActionService.saveUserScrollDepth(req.body);
+    const { domain } = req.params;
+    const userId = req.cookies.userId;
+    await userActionService.saveUserScrollDepth({ ...req.body, domain, userId });
     res.status(201).json({ message: '스크롤깊이 전송 성공' });
   }),
 
   saveBounceRate: wrapAsync(async (req: Request, res: Response) => {
     const { domain } = req.params;
-    const { userId } = req.body;
+    const userId = req.cookies.userId;
     await userActionService.saveBounceRate(domain, userId);
     res.status(201).json({ message: '이탈여부 전송 성공' });
   }),

@@ -2,8 +2,8 @@ import sequelize from '../config/db';
 import { UserActionModel } from '../models/userActionModel';
 
 interface UserScroll {
-  userId: string;
   domain: string;
+  userId: string;
   url: string;
   scrollDepth: number;
 }

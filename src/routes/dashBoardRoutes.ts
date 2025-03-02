@@ -1,5 +1,6 @@
 import express from 'express';
 import { heartbeatController } from '../controllers/heartbeatController';
+import { userActionController } from '../controllers/userActionController';
 import { userDeviceController } from '../controllers/userDeviceController';
 import { userInfoController } from '../controllers/userInfoController';
 import { userPageInfoController } from '../controllers/userPageInfoController';
@@ -28,4 +29,23 @@ dashBoardRouter.get(
   '/domains/:domain/pageInfo/loadTime',
   userPageInfoController.getAveragePageLoadTime
 );
-dashBoardRouter.get('/domains/:domain/pageInfo/visit', userPageInfoController.getPageViewCount);
+dashBoardRouter.get(
+  '/domains/:domain/pageInfo/visitorsPageByPeriodCount',
+  userPageInfoController.getPageViewCount
+);
+dashBoardRouter.get(
+  '/domains/:domain/userAction/PerPageAverageScrollDepth',
+  userActionController.getPerPageAverageScrollDepth
+);
+dashBoardRouter.get(
+  '/domains/:domain/userAction/getBounceRate',
+  userActionController.getBounceRate
+);
+dashBoardRouter.get(
+  `/domains/:domain/pageInfo/visitorsByPeriodCount`,
+  userPageInfoController.getVisitorsByPeriod
+);
+dashBoardRouter.get(
+  `/domains/:domain/pageInfo/totalVisitorsCount`,
+  userPageInfoController.getTotalVisitors
+);
