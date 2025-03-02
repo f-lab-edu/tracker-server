@@ -3,7 +3,9 @@ import { userDeviceService } from '../services/userDeviceService';
 import { wrapAsync } from '../utils/wrapAsync';
 export const userDeviceController = {
   saveUserDevice: wrapAsync(async (req: Request, res: Response) => {
-    await userDeviceService.saveUserDevice(req.body);
+    const { domain } = req.params;
+    const userId = req.cookies.userId;
+    await userDeviceService.saveUserDevice({ ...req.body, domain, userId });
     res.status(201).json({ message: '유저 디바이스 정보 전송 성공' });
   }),
 

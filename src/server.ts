@@ -9,7 +9,7 @@ const port = 3000;
 
 app.use(cors());
 app.use(express.json());
-app.post('/UserCookieId', (req, res) => {
+app.post('/userCookieId', (req, res) => {
   let userId = req.cookies.userId || req.body.userId;
   if (!userId) {
     userId = UUIDV4();

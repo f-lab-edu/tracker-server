@@ -3,10 +3,8 @@ import { heartbeatService } from '../services/heartbeatService';
 export const heartbeatController = {
   async handleHeartbeat(req: Request, res: Response): Promise<void> {
     const { userId, status } = req.body;
-
     try {
       const existingRecord = await heartbeatService.findByUserId(userId);
-
       if (!existingRecord) {
         await heartbeatService.createHeartbeat(userId);
         res.status(201).json({ message: '초기 heartbeat 기록 성공' });
