@@ -1,30 +1,25 @@
 import { Request, Response } from 'express';
 import { heartbeatService } from '../services/heartbeatService';
-export const heartbeatController = {
-  async handleHeartbeat(req: Request, res: Response): Promise<void> {
-    const { userId, status } = req.body;
-    try {
-      const existingRecord = await heartbeatService.findByUserId(userId);
-      if (!existingRecord) {
-        await heartbeatService.createHeartbeat(userId);
-        res.status(201).json({ message: '초기 heartbeat 기록 성공' });
-      } else {
-        await heartbeatService.updateHeartbeat(userId, status);
-        res.status(200).json({ message: 'heartbeat 업데이트 성공' });
-      }
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: '서버 에러' });
-    }
-  },
+import { wrapAsync } from '../utils/wrapAsync';
 
-  async getOnlineUsersCount(res: Response) {
-    try {
-      const onlineUsersCount = await heartbeatService.getOnlineUsersCount();
-      res.status(200).json({ onlineUsersCount });
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ message: '서버에러' });
+export const heartbeatController = {
+  saveHeartbeat: wrapAsync(async (req: Request, res: Response) => {
+    const { domain } = req.params;
+    const userId = req.cookies.userId;
+    const { isOnline } = req.body;
+    const existingUser = await heartbeatService.findByUserId(domain, userId);
+    if (!existingUser) {
+      await heartbeatService.createHeartbeat(domain, userId);
+      res.status(201).json({ message: '초기 heartbeat 기록 성공' });
+    } else {
+      await heartbeatService.updateHeartbeat(domain, userId, isOnline);
+      res.status(200).json({ message: 'heartbeat 업데이트 성공' });
     }
-  },
+  }),
+
+  getOnlineUsersCount: wrapAsync(async (req: Request, res: Response) => {
+    const { domain } = req.params;
+    const onlineUsersCount = await heartbeatService.getOnlineUsersCount(domain);
+    res.status(200).json({ onlineUsersCount });
+  }),
 };
