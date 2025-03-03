@@ -1,26 +1,19 @@
 import express from 'express';
-import { heartbeatController } from '../controllers/heartbeatController';
-import { userActionController } from '../controllers/userActionController';
-import { userDeviceController } from '../controllers/userDeviceController';
-import { userInfoController } from '../controllers/userInfoController';
-import { userPageInfoController } from '../controllers/userPageInfoController';
+import { trackerSdkController } from '../controllers/trackerSdkController';
 
 export const trackerSdkRouter = express.Router();
 
-trackerSdkRouter.post('/domains/:domain/userInfo', userInfoController.saveUserInfo);
-trackerSdkRouter.post('/domains/:domain/userDevice', userDeviceController.saveUserDevice);
-trackerSdkRouter.post('/domains/:domain/heartbeat', heartbeatController.saveHeartbeat);
-trackerSdkRouter.post('/domains/:domain/pageInfo/referrer', userPageInfoController.saveReferrer);
+trackerSdkRouter.post('/domains/:domain/userInfo', trackerSdkController.saveUserInfo);
+trackerSdkRouter.post('/domains/:domain/userDevice', trackerSdkController.saveUserDevice);
+trackerSdkRouter.post('/domains/:domain/heartbeat', trackerSdkController.saveHeartbeat);
+trackerSdkRouter.post('/domains/:domain/pageInfo/referrer', trackerSdkController.saveReferrer);
+trackerSdkRouter.post('/domains/:domain/pageInfo/loadTime', trackerSdkController.savePageLoadTime);
+trackerSdkRouter.post('/domains/:domain/pageInfo/visit', trackerSdkController.savePageViewCount);
 trackerSdkRouter.post(
-  '/domains/:domain/pageInfo/loadTime',
-  userPageInfoController.savePageLoadTime
-);
-trackerSdkRouter.post('/domains/:domain/pageInfo/visit', userPageInfoController.savePageViewCount);
-trackerSdkRouter.post(
-  '/domains/:domain/userAction/saveUserScrollDepth',
-  userActionController.saveUserScrollDepth
+  '/domains/:domain/userAction/userScrollDepth',
+  trackerSdkController.saveUserScrollDepth
 );
 trackerSdkRouter.post(
-  '/domains/:domain/userAction/saveBounceRate',
-  userActionController.saveBounceRate
+  '/domains/:domain/userAction/bounceRate',
+  trackerSdkController.saveBounceRate
 );
