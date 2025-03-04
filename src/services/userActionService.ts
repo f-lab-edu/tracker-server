@@ -1,12 +1,6 @@
 import sequelize from '../config/db';
 import { UserActionModel } from '../models/userActionModel';
-
-interface UserScroll {
-  userId: string;
-  domain: string;
-  url: string;
-  scrollDepth: number;
-}
+import { UserScroll } from '../types/userActionType';
 
 export const userActionService = {
   saveUserScrollDepth: async (data: UserScroll) => {
@@ -26,6 +20,10 @@ export const userActionService = {
     }
   },
 
+  saveBounceRate: async (userId: string, domain: string) => {
+    await UserActionModel.update({ isBounced: true }, { where: { userId, domain } });
+  },
+
   getPerPageAverageScrollDepth: async (domain: string) => {
     const results = await UserActionModel.findAll({
       where: { domain },
@@ -34,10 +32,6 @@ export const userActionService = {
       raw: true,
     });
     return results;
-  },
-
-  saveBounceRate: async (userId: string, domain: string) => {
-    await UserActionModel.update({ isBounced: true }, { where: { userId, domain } });
   },
 
   getBounceRate: async (domain: string) => {

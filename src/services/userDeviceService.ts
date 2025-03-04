@@ -1,14 +1,6 @@
 import sequelize from '../config/db';
 import { UserDeviceModel } from '../models/userDeviceModel';
-
-interface UserDeviceInfo {
-  userId: string;
-  domain: string;
-  browser: string;
-  isMobile: string;
-  os: string;
-  resolution: string;
-}
+import { UserDeviceInfo } from '../types/userDeviceType';
 
 export const userDeviceService = {
   saveUserDevice: async (data: UserDeviceInfo) => {
