@@ -1,51 +1,47 @@
 import express from 'express';
-import { heartbeatController } from '../controllers/heartbeatController';
-import { userActionController } from '../controllers/userActionController';
-import { userDeviceController } from '../controllers/userDeviceController';
-import { userInfoController } from '../controllers/userInfoController';
-import { userPageInfoController } from '../controllers/userPageInfoController';
+import { dashboardController } from '../controllers/dashboardController';
 
-export const dashBoardRouter = express.Router();
+export const dashboardRouter = express.Router();
 
-dashBoardRouter.get('/domains/:domain/onlineUsersCount', heartbeatController.getOnlineUsersCount);
-dashBoardRouter.get(
+dashboardRouter.get('/domains/:domain/onlineUsersCount', dashboardController.getOnlineUsersCount);
+dashboardRouter.get(
   '/domains/:domain/userDevice/browsersStats',
-  userDeviceController.getBrowserStats
+  dashboardController.getBrowserStats
 );
-dashBoardRouter.get('/domains/:domain/userDevice/osStats', userDeviceController.getOsStats);
-dashBoardRouter.get('/domains/:domain/userDevice/deviceStats', userDeviceController.getDeviceStats);
-dashBoardRouter.get(
+dashboardRouter.get('/domains/:domain/userDevice/osStats', dashboardController.getOsStats);
+dashboardRouter.get('/domains/:domain/userDevice/deviceStats', dashboardController.getDeviceStats);
+dashboardRouter.get(
   '/domains/:domain/userDevice/resolutionStats',
-  userDeviceController.getResolutionStats
+  dashboardController.getResolutionStats
 );
-dashBoardRouter.get('/domains/:domain/userInfo/languageStats', userInfoController.getLanguageStats);
-dashBoardRouter.get('/domains/:domain/userInfo/countryStats', userInfoController.getCountryStats);
-dashBoardRouter.get(
-  '/domains/:domain/userInfo/visited-rate',
-  userInfoController.getVisitedUsersRate
+dashboardRouter.get(
+  '/domains/:domain/userInfo/languageStats',
+  dashboardController.getLanguageStats
 );
-dashBoardRouter.get('/domains/:domain/pageInfo/referrer', userPageInfoController.getReferrerStats);
-dashBoardRouter.get(
+dashboardRouter.get('/domains/:domain/userInfo/countryStats', dashboardController.getCountryStats);
+dashboardRouter.get(
+  '/domains/:domain/userInfo/visitedRate',
+  dashboardController.getVisitedUsersRate
+);
+dashboardRouter.get('/domains/:domain/pageInfo/referrer', dashboardController.getReferrerStats);
+dashboardRouter.get(
   '/domains/:domain/pageInfo/loadTime',
-  userPageInfoController.getAveragePageLoadTime
+  dashboardController.getAveragePageLoadTime
 );
-dashBoardRouter.get(
+dashboardRouter.get(
   '/domains/:domain/pageInfo/visitorsPageByPeriodCount',
-  userPageInfoController.getPageViewCount
+  dashboardController.getPageViewCount
 );
-dashBoardRouter.get(
-  '/domains/:domain/userAction/PerPageAverageScrollDepth',
-  userActionController.getPerPageAverageScrollDepth
+dashboardRouter.get(
+  '/domains/:domain/userAction/perPageAverageScrollDepth',
+  dashboardController.getPerPageAverageScrollDepth
 );
-dashBoardRouter.get(
-  '/domains/:domain/userAction/getBounceRate',
-  userActionController.getBounceRate
-);
-dashBoardRouter.get(
+dashboardRouter.get('/domains/:domain/userAction/bounceRate', dashboardController.getBounceRate);
+dashboardRouter.get(
   `/domains/:domain/pageInfo/visitorsByPeriodCount`,
-  userPageInfoController.getVisitorsByPeriod
+  dashboardController.getVisitorsByPeriod
 );
-dashBoardRouter.get(
+dashboardRouter.get(
   `/domains/:domain/pageInfo/totalVisitorsCount`,
-  userPageInfoController.getTotalVisitors
+  dashboardController.getTotalVisitors
 );
