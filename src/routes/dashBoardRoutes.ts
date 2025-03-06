@@ -4,16 +4,10 @@ import { dashboardController } from '../controllers/dashboardController';
 export const dashboardRouter = express.Router();
 
 dashboardRouter.get('/domains/:domain/onlineUsersCount', dashboardController.getOnlineUsersCount);
-dashboardRouter.get(
-  '/domains/:domain/userDevice/browsersStats',
-  dashboardController.getBrowserStats
-);
-dashboardRouter.get('/domains/:domain/userDevice/osStats', dashboardController.getOsStats);
-dashboardRouter.get('/domains/:domain/userDevice/deviceStats', dashboardController.getDeviceStats);
-dashboardRouter.get(
-  '/domains/:domain/userDevice/resolutionStats',
-  dashboardController.getResolutionStats
-);
+dashboardRouter.get('/userDevice/browsersStats', dashboardController.getBrowserStats);
+dashboardRouter.get('/userDevice/osStats', dashboardController.getOsStats);
+dashboardRouter.get('/userDevice/deviceStats', dashboardController.getDeviceStats);
+dashboardRouter.get('/userDevice/resolutionStats', dashboardController.getResolutionStats);
 dashboardRouter.get(
   '/domains/:domain/userInfo/languageStats',
   dashboardController.getLanguageStats
