@@ -1,3 +1,4 @@
+import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
 import { UUIDV4 } from 'sequelize';
@@ -8,7 +9,13 @@ import { trackerSdkRouter } from './routes/trackerSdkRoutes';
 const app = express();
 const port = 3000;
 
-app.use(cors());
+app.use(
+  cors({
+    origin: 'http://client-tracker-sdk',
+    credentials: true,
+  })
+);
+app.use(cookieParser());
 app.use(express.json());
 app.post('/userCookieId', (req, res) => {
   let userId = req.cookies.userId || req.body.userId;
