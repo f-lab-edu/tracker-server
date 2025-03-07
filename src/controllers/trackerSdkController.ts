@@ -1,23 +1,23 @@
 import { NextFunction, Request, Response } from 'express';
-import { heartbeatService } from '../services/heartbeatService';
 import { userActionService } from '../services/userActionService';
+import { userConnectionService } from '../services/userConnectionService';
 import { userDeviceService } from '../services/userDeviceService';
 import { userInfoService } from '../services/userInfoService';
 import { userPageInfoService } from '../services/userPageInfoService';
 
 export const trackerSdkController = {
-  saveHeartbeat: async (req: Request, res: Response, next: NextFunction) => {
+  saveIsOnline: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { domain } = req.params;
+      const domain = res.locals.domains.domain;
       const userId = req.cookies.userId;
       const { isOnline } = req.body;
-      const existingUser = await heartbeatService.findByUserId(domain, userId);
+      const existingUser = await userConnectionService.findByUserId(domain, userId);
       if (!existingUser) {
-        await heartbeatService.createHeartbeat(domain, userId);
-        res.status(201).json({ message: '초기 heartbeat 기록 성공' });
+        await userConnectionService.createIsOnline(domain, userId);
+        res.status(201).json({ message: '초기 userConnection 기록 성공' });
       } else {
-        await heartbeatService.updateHeartbeat(domain, userId, isOnline);
-        res.status(200).json({ message: 'heartbeat 업데이트 성공' });
+        await userConnectionService.updateIsOnline(domain, userId, isOnline);
+        res.status(200).json({ message: 'userConnection 업데이트 성공' });
       }
     } catch (err) {
       next(err);

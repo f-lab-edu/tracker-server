@@ -1,9 +1,9 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../config/db';
 
-class Heartbeat extends Model {}
+class UserConnection extends Model {}
 
-Heartbeat.init(
+UserConnection.init(
   {
     userId: { type: DataTypes.STRING, allowNull: false, primaryKey: true },
     domain: { type: DataTypes.STRING, allowNull: false },
@@ -13,10 +13,10 @@ Heartbeat.init(
   },
   {
     sequelize,
-    modelName: 'heartbeat',
-    tableName: 'heartbeats',
+    modelName: 'userConnection',
+    tableName: 'userConnections',
     timestamps: true,
   }
 );
 
-export const heartbeatModel = Heartbeat;
+export const userConnectionModel = UserConnection;

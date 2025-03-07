@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import { heartbeatService } from '../services/heartbeatService';
 import { userActionService } from '../services/userActionService';
+import { userConnectionService } from '../services/userConnectionService';
 import { userDeviceService } from '../services/userDeviceService';
 import { userInfoService } from '../services/userInfoService';
 import { userPageInfoService } from '../services/userPageInfoService';
@@ -9,7 +9,7 @@ export const dashboardController = {
   getOnlineUsersCount: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { domain } = req.params;
-      const onlineUsersCount = await heartbeatService.getOnlineUsersCount(domain);
+      const onlineUsersCount = await userConnectionService.getOnlineUsersCount(domain);
       res.status(200).json({ onlineUsersCount });
     } catch (err) {
       next(err);
