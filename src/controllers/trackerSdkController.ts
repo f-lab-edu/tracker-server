@@ -48,7 +48,7 @@ export const trackerSdkController = {
 
   saveUserDevice: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const domain = res.locals.domain.domain;
+      const domain = res.locals.domains.domain;
       const userId = req.cookies.userId;
       await userDeviceService.saveUserDevice({ ...req.body, domain, userId });
       res.status(201).json({ message: '유저 디바이스 정보 전송 성공' });
