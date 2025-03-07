@@ -4,7 +4,7 @@ import { UserDeviceInfo } from '../types/userDeviceType';
 
 export const userDeviceService = {
   saveUserDevice: async (data: UserDeviceInfo) => {
-    const userDevice = await UserDeviceModel.upsert({ ...data });
+    const userDevice = await UserDeviceModel.create({ ...data });
     return userDevice;
   },
 
