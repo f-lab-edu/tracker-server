@@ -5,7 +5,7 @@ export const trackerSdkRouter = express.Router();
 
 trackerSdkRouter.post('/domains/:domain/userInfo', trackerSdkController.saveUserInfo);
 trackerSdkRouter.post('/userDevice', trackerSdkController.saveUserDevice);
-trackerSdkRouter.post('/domains/:domain/heartbeat', trackerSdkController.saveHeartbeat);
+trackerSdkRouter.post('/userConnection', trackerSdkController.saveIsOnline);
 trackerSdkRouter.post('/domains/:domain/pageInfo/referrer', trackerSdkController.saveReferrer);
 trackerSdkRouter.post('/domains/:domain/pageInfo/loadTime', trackerSdkController.savePageLoadTime);
 trackerSdkRouter.post('/domains/:domain/pageInfo/visit', trackerSdkController.savePageViewCount);

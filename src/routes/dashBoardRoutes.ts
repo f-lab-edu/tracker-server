@@ -3,7 +3,7 @@ import { dashboardController } from '../controllers/dashboardController';
 
 export const dashboardRouter = express.Router();
 
-dashboardRouter.get('/domains/:domain/onlineUsersCount', dashboardController.getOnlineUsersCount);
+dashboardRouter.get('/userConnection/onlineUsersCount', dashboardController.getOnlineUsersCount);
 dashboardRouter.get('/userDevice/browsersStats', dashboardController.getBrowserStats);
 dashboardRouter.get('/userDevice/osStats', dashboardController.getOsStats);
 dashboardRouter.get('/userDevice/deviceStats', dashboardController.getDeviceStats);
