@@ -1,4 +1,4 @@
-import { apiKeyModel } from '../models/apikeyModel';
+import { apiKeyModel } from '../models/apiKeyModel';
 
 export async function getAPIKeyFromDB(apiKey: string) {
   const apiKeyData = await apiKeyModel.findOne({
