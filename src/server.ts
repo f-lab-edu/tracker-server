@@ -2,7 +2,7 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
 import { UUIDV4 } from 'sequelize';
-import { errorHandle } from './middleware/errorhandle';
+import { errorHandle } from './middleware/errorHandle';
 import { dashboardRouter } from './routes/dashboardRoutes';
 import { trackerSdkRouter } from './routes/trackerSdkRoutes';
 
@@ -17,13 +17,16 @@ app.use(
 );
 app.use(cookieParser());
 app.use(express.json());
-app.post('/userCookieId', (req, res) => {
-  let userId = req.cookies.userId || req.body.userId;
+app.get('/userCookieId', (req, res) => {
+  let userId = req.body.userId;
   if (!userId) {
     userId = UUIDV4();
   }
-  res.setHeader('Set-Cookie', `userId=${userId}; Path=/; Max-Age=604800; SameSite=None; Secure`);
-  res.json({ userId });
+  res.setHeader(
+    'Set-Cookie',
+    `userId=${userId}; Max-Age=999999999 Path=/; SameSite=None; Secure; HttpOnly`
+  );
+  res.send({ success: true });
 });
 app.use(dashboardRouter);
 app.use(trackerSdkRouter);

@@ -12,7 +12,7 @@ export async function authenticateAPIKey(req: Request, res: Response, next: Next
     if (!apiKeyData) {
       return res.status(403).json({ error: 'Forbidden: Invalid API Key' });
     }
-    res.locals.domain = { domain: apiKeyData };
+    res.locals.domains = { domain: apiKeyData };
     next();
   } catch (err) {
     next(err);
