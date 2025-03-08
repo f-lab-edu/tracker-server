@@ -26,7 +26,7 @@ export const trackerSdkController = {
 
   saveUserScrollDepth: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { domain } = req.params;
+      const domain = res.locals.domains.domain;
       const userId = req.cookies.userId;
       await userActionService.saveUserScrollDepth({ ...req.body, domain, userId });
       res.status(201).json({ message: '스크롤깊이 전송 성공' });
