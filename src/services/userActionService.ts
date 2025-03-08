@@ -51,12 +51,25 @@ export const userActionService = {
     return results;
   },
 
-  getBounceRate: async (domain: string) => {
-    const totalUsers = await UserActionModel.count({ where: { domain } });
-    const bouncedUsers = await UserActionModel.count({
-      where: { domain, isBounced: true },
+  getPerPageBounceRate: async (domain: string) => {
+    const totalUsersPerPage = await UserActionModel.findAll({
+      where: { domain },
+      attributes: [
+        'url',
+        [sequelize.fn('COUNT', sequelize.literal('DISTINCT userId')), 'totalUsers'],
+      ],
+      group: ['url'],
+      raw: true,
     });
-    const bounceRate = totalUsers > 0 ? (bouncedUsers / totalUsers) * 100 : 0;
-    return { domain, bounceRate };
+    const bouncedUsersPerPage = await UserActionModel.findAll({
+      where: { domain, isBounced: true },
+      attributes: [
+        'url',
+        [sequelize.fn('COUNT', sequelize.literal('DISTINCT userId')), 'bouncedUsers'],
+      ],
+      group: ['url'],
+      raw: true,
+    });
+    return { totalUsersPerPage, bouncedUsersPerPage };
   },
 };
