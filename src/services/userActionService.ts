@@ -20,8 +20,14 @@ export const userActionService = {
     }
   },
 
-  saveBounceRate: async (userId: string, domain: string) => {
-    await UserActionModel.update({ isBounced: true }, { where: { userId, domain } });
+  saveBounceRate: async (domain: string, userId: string, url: string) => {
+    await UserActionModel.create({
+      domain,
+      userId,
+      url,
+      scrollDepth: null,
+      isBounced: true,
+    });
   },
 
   getPerPageAverageScrollDepth: async (domain: string) => {

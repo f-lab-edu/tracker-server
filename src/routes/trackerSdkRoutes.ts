@@ -13,7 +13,4 @@ trackerSdkRouter.post(
   '/domains/:domain/userAction/userScrollDepth',
   trackerSdkController.saveUserScrollDepth
 );
-trackerSdkRouter.post(
-  '/domains/:domain/userAction/bounceRate',
-  trackerSdkController.saveBounceRate
-);
+trackerSdkRouter.post('/userAction/bounceRate', trackerSdkController.saveBounceRate);

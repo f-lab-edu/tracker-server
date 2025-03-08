@@ -37,9 +37,10 @@ export const trackerSdkController = {
 
   saveBounceRate: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { domain } = req.params;
+      const domain = res.locals.domains.domain;
       const userId = req.cookies.userId;
-      await userActionService.saveBounceRate(domain, userId);
+      const url = req.body.url;
+      await userActionService.saveBounceRate(domain, userId, url);
       res.status(201).json({ message: '이탈여부 전송 성공' });
     } catch (err) {
       next(err);
