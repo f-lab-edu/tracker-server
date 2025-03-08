@@ -1,7 +1,7 @@
 import { Op } from 'sequelize';
 import sequelize from '../config/db';
 import { UserPageInfoModel } from '../models/userPageInfoModel';
-import { PageInfo, PageLoadInfo, PageViewCountInfo } from '../types/userPageType';
+import { PageInfo, PageLoadInfo } from '../types/userPageType';
 
 export const userPageInfoService = {
   saveReferrer: async (data: PageInfo) => {
@@ -19,32 +19,18 @@ export const userPageInfoService = {
     return null;
   },
 
-  savePageLoadTime: async (data: PageLoadInfo) => {
+  savePageInfo: async (data: PageLoadInfo) => {
+    const today = new Date().toISOString().split('T')[0];
     const existingRecord = await UserPageInfoModel.findOne({
-      where: { domain: data.domain, url: data.url, userId: data.userId },
+      where: { domain: data.domain, url: data.url, userId: data.userId, date: today },
     });
     if (existingRecord) {
       return await UserPageInfoModel.update(
-        { loadTime: data.loadTime },
-        { where: { domain: data.domain, url: data.url, userId: data.userId } }
+        { loadTime: data.loadTime, visitCount: sequelize.literal('visitCount + 1') },
+        { where: { domain: data.domain, url: data.url, userId: data.userId, date: today } }
       );
     } else {
-      return await UserPageInfoModel.create({ ...data });
-    }
-  },
-
-  savePageViewCount: async (data: PageViewCountInfo) => {
-    const { domain, url, date } = data;
-    const existingRecord = await UserPageInfoModel.findOne({
-      where: { domain, url, date },
-    });
-    if (existingRecord) {
-      return await UserPageInfoModel.update(
-        { visitCount: sequelize.literal('visitCount + 1') },
-        { where: { domain, url, date } }
-      );
-    } else {
-      return await UserPageInfoModel.create({ domain, url, visitCount: 1, date });
+      return await UserPageInfoModel.create({ ...data, visitCount: 1, date: today });
     }
   },
 
@@ -68,7 +54,7 @@ export const userPageInfoService = {
     return avgLoadTimes;
   },
 
-  getPerPageViewCounts: async (domain: string, startDate: string, endDate: string) => {
+  getPerDayPageViewCounts: async (domain: string, startDate: string, endDate: string) => {
     return await UserPageInfoModel.findAll({
       where: {
         domain,
@@ -91,8 +77,8 @@ export const userPageInfoService = {
     });
   },
 
-  getPerVisitorCounts: async (domain: string, startDate: string, endDate: string) => {
-    return await UserPageInfoModel.findOne({
+  getPerDayVisitorCounts: async (domain: string, startDate: string, endDate: string) => {
+    return await UserPageInfoModel.findAll({
       where: {
         domain,
         date: {
@@ -106,12 +92,14 @@ export const userPageInfoService = {
           'uniqueVisitors',
         ],
       ],
+      group: ['date'],
+      order: [['date', 'ASC']],
       raw: true,
     });
   },
 
   getTotalVisitors: async (domain: string) => {
-    return await UserPageInfoModel.findOne({
+    return await UserPageInfoModel.findAll({
       where: { domain },
       attributes: [
         [sequelize.fn('SUM', sequelize.col('visitCount')), 'totalVisitCount'],

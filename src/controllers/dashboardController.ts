@@ -135,7 +135,7 @@ export const dashboardController = {
         res.status(400).json({ message: '시작 날짜와 종료날짜 올바르게 입력하세요' });
         return;
       }
-      const pageViewCounts = await userPageInfoService.getPerPageViewCounts(
+      const pageViewCounts = await userPageInfoService.getPerDayPageViewCounts(
         domain,
         startDate,
         endDate
@@ -154,7 +154,7 @@ export const dashboardController = {
         res.status(400).json({ message: 'startDate와 endDate는 필수입니다.' });
         return;
       }
-      const visitorsData = await userPageInfoService.getPerVisitorCounts(
+      const visitorsData = await userPageInfoService.getPerDayVisitorCounts(
         domain,
         startDate,
         endDate
