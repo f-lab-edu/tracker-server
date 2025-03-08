@@ -59,7 +59,7 @@ export const trackerSdkController = {
 
   saveUserInfo: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { domain } = req.params;
+      const domain = res.locals.domains.domain;
       const userId = req.cookies.userId;
       await userInfoService.saveUserInfo({ ...req.body, domain, userId });
       res.status(201).json({ message: '유저 정보 전송 성공' });

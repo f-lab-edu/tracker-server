@@ -3,7 +3,7 @@ import { trackerSdkController } from '../controllers/trackerSdkController';
 
 export const trackerSdkRouter = express.Router();
 
-trackerSdkRouter.post('/domains/:domain/userInfo', trackerSdkController.saveUserInfo);
+trackerSdkRouter.post('/userInfo', trackerSdkController.saveUserInfo);
 trackerSdkRouter.post('/userDevice', trackerSdkController.saveUserDevice);
 trackerSdkRouter.post('/userConnection', trackerSdkController.saveIsOnline);
 trackerSdkRouter.post('/domains/:domain/pageInfo/referrer', trackerSdkController.saveReferrer);
