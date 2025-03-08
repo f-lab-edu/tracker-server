@@ -27,10 +27,10 @@ export const dashboardController = {
     }
   },
 
-  getBounceRate: async (req: Request, res: Response, next: NextFunction) => {
+  getPerPageBounceRate: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { domain } = req.params;
-      const bounceRate = await userActionService.getBounceRate(domain);
+      const bounceRate = await userActionService.getPerPageBounceRate(domain);
       res.status(200).json(bounceRate);
     } catch (err) {
       next(err);
@@ -79,7 +79,7 @@ export const dashboardController = {
 
   getLanguageStats: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const domain = req.params.domain;
+      const { domain } = req.params;
       const languageStats = await userInfoService.getLanguageStats(domain);
       res.status(200).json(languageStats);
     } catch (err) {
@@ -89,7 +89,7 @@ export const dashboardController = {
 
   getCountryStats: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const domain = req.params.domain;
+      const { domain } = req.params;
       const countryStats = await userInfoService.getCountryStats(domain);
       res.status(200).json(countryStats);
     } catch (err) {
@@ -99,7 +99,7 @@ export const dashboardController = {
 
   getVisitedUsersRate: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const domain = req.params.domain;
+      const { domain } = req.params;
       const getVisitedUsersRate = await userInfoService.getVisitedUsersRate(domain);
       res.status(200).json(getVisitedUsersRate);
     } catch (err) {
@@ -109,7 +109,7 @@ export const dashboardController = {
 
   getReferrerStats: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const domain = req.params.domain;
+      const { domain } = req.params;
       const referrerStatus = await userPageInfoService.getReferrerStats(domain);
       res.status(200).json(referrerStatus);
     } catch (err) {
@@ -119,7 +119,7 @@ export const dashboardController = {
 
   getAveragePageLoadTime: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const domain = req.params.domain;
+      const { domain } = req.params;
       const avgLoadTime = await userPageInfoService.getAveragePageLoadTime(domain);
       res.status(200).json(avgLoadTime);
     } catch (err) {
@@ -129,7 +129,7 @@ export const dashboardController = {
 
   getPageViewCount: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const domain = req.params.domain;
+      const { domain } = req.params;
       const { startDate, endDate } = req.query;
       if (typeof startDate !== 'string' || typeof endDate !== 'string') {
         res.status(400).json({ message: '시작 날짜와 종료날짜 올바르게 입력하세요' });

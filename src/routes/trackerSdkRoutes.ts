@@ -9,11 +9,5 @@ trackerSdkRouter.post('/userConnection', trackerSdkController.saveIsOnline);
 trackerSdkRouter.post('/domains/:domain/pageInfo/referrer', trackerSdkController.saveReferrer);
 trackerSdkRouter.post('/domains/:domain/pageInfo/loadTime', trackerSdkController.savePageLoadTime);
 trackerSdkRouter.post('/domains/:domain/pageInfo/visit', trackerSdkController.savePageViewCount);
-trackerSdkRouter.post(
-  '/domains/:domain/userAction/userScrollDepth',
-  trackerSdkController.saveUserScrollDepth
-);
-trackerSdkRouter.post(
-  '/domains/:domain/userAction/bounceRate',
-  trackerSdkController.saveBounceRate
-);
+trackerSdkRouter.post('/userAction/userScrollDepth', trackerSdkController.saveUserScrollDepth);
+trackerSdkRouter.post('/userAction/bounceRate', trackerSdkController.saveBounceRate);
