@@ -33,7 +33,18 @@ export const userActionService = {
   getPerPageAverageScrollDepth: async (domain: string) => {
     const results = await UserActionModel.findAll({
       where: { domain },
-      attributes: ['url', [sequelize.fn('AVG', sequelize.col('scrollDepth')), 'avgScrollDepth']],
+      attributes: [
+        'url',
+        [
+          sequelize.fn(
+            'AVG',
+            sequelize.literal(
+              '(SELECT MAX(scrollDepth) FROM userActions AS ua WHERE ua.userId = userAction.userId AND ua.url = userAction.url)'
+            )
+          ),
+          'avgScrollDepth',
+        ],
+      ],
       group: ['url'],
       raw: true,
     });
