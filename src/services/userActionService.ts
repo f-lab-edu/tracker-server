@@ -19,7 +19,7 @@ export const userActionService = {
       await UserActionModel.create({ ...data });
     }
   },
-
+  
   saveBounceRate: async (domain: string, userId: string, url: string) => {
     await UserActionModel.create({
       domain,
