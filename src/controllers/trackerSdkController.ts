@@ -71,7 +71,7 @@ export const trackerSdkController = {
 
   saveReferrer: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const domain = res.locals.domains.domain;
+      const domain = res.locals.domain;
       const userId = req.cookies.userId;
       await userPageInfoService.saveReferrer({ ...req.body, domain, userId });
       res.status(201).json({ message: '유입 경로 저장완료' });
@@ -82,7 +82,7 @@ export const trackerSdkController = {
 
   savePageInfo: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const domain = res.locals.domains.domain;
+      const domain = res.locals.domain;
       const userId = req.cookies.userId;
       await userPageInfoService.savePageInfo({ ...req.body, domain, userId });
       res.send(201).json('페이지 로드 시간 저장완료');
