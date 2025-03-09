@@ -8,7 +8,7 @@ import { userPageInfoService } from '../services/userPageInfoService';
 export const trackerSdkController = {
   saveIsOnline: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const domain = res.locals.domains.domain;
+      const domain = res.locals.domain;
       const userId = req.cookies.userId;
       const { isOnline } = req.body;
       const existingUser = await userConnectionService.findByUserId(domain, userId);
@@ -26,7 +26,7 @@ export const trackerSdkController = {
 
   saveUserScrollDepth: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { domain } = req.params;
+      const domain = res.locals.domain;
       const userId = req.cookies.userId;
       await userActionService.saveUserScrollDepth({ ...req.body, domain, userId });
       res.status(201).json({ message: '스크롤깊이 전송 성공' });
@@ -37,9 +37,10 @@ export const trackerSdkController = {
 
   saveBounceRate: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { domain } = req.params;
+      const domain = res.locals.domain;
       const userId = req.cookies.userId;
-      await userActionService.saveBounceRate(domain, userId);
+      const url = req.body.url;
+      await userActionService.saveBounceRate(domain, userId, url);
       res.status(201).json({ message: '이탈여부 전송 성공' });
     } catch (err) {
       next(err);
@@ -48,7 +49,7 @@ export const trackerSdkController = {
 
   saveUserDevice: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const domain = res.locals.domains.domain;
+      const domain = res.locals.domain;
       const userId = req.cookies.userId;
       await userDeviceService.saveUserDevice({ ...req.body, domain, userId });
       res.status(201).json({ message: '유저 디바이스 정보 전송 성공' });

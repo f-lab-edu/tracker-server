@@ -19,27 +19,57 @@ export const userActionService = {
       await UserActionModel.create({ ...data });
     }
   },
-
-  saveBounceRate: async (userId: string, domain: string) => {
-    await UserActionModel.update({ isBounced: true }, { where: { userId, domain } });
+  
+  saveBounceRate: async (domain: string, userId: string, url: string) => {
+    await UserActionModel.create({
+      domain,
+      userId,
+      url,
+      scrollDepth: null,
+      isBounced: true,
+    });
   },
 
   getPerPageAverageScrollDepth: async (domain: string) => {
     const results = await UserActionModel.findAll({
       where: { domain },
-      attributes: ['url', [sequelize.fn('AVG', sequelize.col('scrollDepth')), 'avgScrollDepth']],
+      attributes: [
+        'url',
+        [
+          sequelize.fn(
+            'AVG',
+            sequelize.literal(
+              '(SELECT MAX(scrollDepth) FROM userActions AS ua WHERE ua.userId = userAction.userId AND ua.url = userAction.url)'
+            )
+          ),
+          'avgScrollDepth',
+        ],
+      ],
       group: ['url'],
       raw: true,
     });
     return results;
   },
 
-  getBounceRate: async (domain: string) => {
-    const totalUsers = await UserActionModel.count({ where: { domain } });
-    const bouncedUsers = await UserActionModel.count({
-      where: { domain, isBounced: true },
+  getPerPageBounceRate: async (domain: string) => {
+    const totalUsersPerPage = await UserActionModel.findAll({
+      where: { domain },
+      attributes: [
+        'url',
+        [sequelize.fn('COUNT', sequelize.literal('DISTINCT userId')), 'totalUsers'],
+      ],
+      group: ['url'],
+      raw: true,
     });
-    const bounceRate = totalUsers > 0 ? (bouncedUsers / totalUsers) * 100 : 0;
-    return { domain, bounceRate };
+    const bouncedUsersPerPage = await UserActionModel.findAll({
+      where: { domain, isBounced: true },
+      attributes: [
+        'url',
+        [sequelize.fn('COUNT', sequelize.literal('DISTINCT userId')), 'bouncedUsers'],
+      ],
+      group: ['url'],
+      raw: true,
+    });
+    return { totalUsersPerPage, bouncedUsersPerPage };
   },
 };

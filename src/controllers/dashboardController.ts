@@ -30,7 +30,7 @@ export const dashboardController = {
   getBounceRate: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { domain } = req.params;
-      const bounceRate = await userActionService.getBounceRate(domain);
+      const bounceRate = await userActionService.getPerPageBounceRate(domain);
       res.status(200).json(bounceRate);
     } catch (err) {
       next(err);
