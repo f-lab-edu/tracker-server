@@ -71,7 +71,7 @@ export const trackerSdkController = {
 
   saveReferrer: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { domain } = req.params;
+      const domain = res.locals.domains.domain;
       const userId = req.cookies.userId;
       await userPageInfoService.saveReferrer({ ...req.body, domain, userId });
       res.status(201).json({ message: '유입 경로 저장완료' });
@@ -80,31 +80,12 @@ export const trackerSdkController = {
     }
   },
 
-  savePageLoadTime: async (req: Request, res: Response, next: NextFunction) => {
+  savePageInfo: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { domain } = req.params;
+      const domain = res.locals.domains.domain;
       const userId = req.cookies.userId;
-      await userPageInfoService.savePageLoadTime({ ...req.body, domain, userId });
+      await userPageInfoService.savePageInfo({ ...req.body, domain, userId });
       res.send(201).json('페이지 로드 시간 저장완료');
-    } catch (err) {
-      next(err);
-    }
-  },
-
-  savePageViewCount: async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { domain } = req.params;
-      const { url } = req.body;
-      if (!url) {
-        res.status(400).json({ message: 'domain과 url은 필수입니다.' });
-      }
-      const today = new Date().toISOString().split('T')[0];
-      const updatedVisitCount = await userPageInfoService.savePageViewCount({
-        domain,
-        url,
-        date: today,
-      });
-      res.status(200).json({ message: '페이지 방문 횟수 저장 완료', data: updatedVisitCount });
     } catch (err) {
       next(err);
     }

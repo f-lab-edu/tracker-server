@@ -27,10 +27,10 @@ dashboardRouter.get(
   dashboardController.getPageViewCount
 );
 dashboardRouter.get(
-  '/domains/:domain/userAction/perPageAverageScrollDepth',
+  '/userAction/perPageAverageScrollDepth',
   dashboardController.getPerPageAverageScrollDepth
 );
-dashboardRouter.get('/domains/:domain/userAction/bounceRate', dashboardController.getBounceRate);
+dashboardRouter.get('/userAction/bounceRate', dashboardController.getPerPageBounceRate);
 dashboardRouter.get(
   `/domains/:domain/pageInfo/visitorsByPeriodCount`,
   dashboardController.getVisitorsByPeriod
