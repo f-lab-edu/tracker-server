@@ -1,10 +1,16 @@
-import { apiKeyModel } from '../models/apiKeyModel';
+import * as crypto from 'crypto';
+import { DashboardClientModel } from '../models/dashboardClientModel';
 
-export async function getAPIKeyFromDB(apiKey: string) {
-  const apiKeyData = await apiKeyModel.findOne({
-    where: { apiKey },
+export async function getClientDomain(apiKey: string) {
+  const hashedApiKey = crypto.createHash('sha256').update(apiKey).digest('hex');
+  const clientDomain = await DashboardClientModel.findOne({
+    where: { hashedApiKey },
     attributes: ['domain'],
+    raw: true,
   });
+  if (!clientDomain) {
+    throw new Error('apiKey가 유효하지 않습니다');
+  }
 
-  return apiKeyData ? apiKeyData.toJSON() : null;
+  return clientDomain;
 }
