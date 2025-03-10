@@ -1,7 +1,6 @@
 import bcrypt from 'bcryptjs';
 import * as crypto from 'crypto';
 import { DashboardClientModel } from '../models/dashboardClientModel';
-import { ClientType } from '../types/dashboardClientType';
 export const dashboardClientService = {
   enrollClient: async (email: string, password: string, domain: string) => {
     const apiKey = crypto.randomBytes(32).toString('hex');
@@ -17,18 +16,18 @@ export const dashboardClientService = {
   },
 
   loginClient: async (email: string, password: string) => {
-    const client = (await DashboardClientModel.findOne({
+    const client = await DashboardClientModel.findOne({
       where: { email },
       attributes: ['hashedPassword', 'domain'],
-      raw: true,
-    })) as ClientType | null;
+    });
     if (!client) {
-      throw new Error('등록된 유저가 아닙니다.');
+      throw new Error('로그인 에러');
     }
-    const isValidPassword = await bcrypt.compare(password, client.hashedPassword);
+    const clientData: { hashedPassword: string; domain: string } = client.get({ plain: true });
+    const isValidPassword = await bcrypt.compare(password, clientData.hashedPassword);
     if (!isValidPassword) {
-      throw new Error('비밀번호가 올바르지 않습니다.');
+      throw new Error('로그인 에러');
     }
-    return client.domain;
+    return clientData.domain;
   },
 };
