@@ -185,4 +185,14 @@ export const dashboardController = {
       next(err);
     }
   },
+
+  loginClient: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { email, password } = req.body;
+      const clientDomain = await dashboardClientService.loginClient(email, password);
+      res.status(200).json({ message: '로그인 성공', clientDomain });
+    } catch (err) {
+      next(err);
+    }
+  },
 };

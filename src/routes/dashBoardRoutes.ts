@@ -40,3 +40,4 @@ dashboardRouter.get(
   dashboardController.getTotalVisitors
 );
 dashboardRouter.post('/enrollClient', dashboardController.enrollClient);
+dashboardRouter.post('/loginClient', dashboardController.loginClient);
