@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import { dashboardClientService } from '../services/dashboardClientService';
 import { userActionService } from '../services/userActionService';
 import { userConnectionService } from '../services/userConnectionService';
 import { userDeviceService } from '../services/userDeviceService';
@@ -170,6 +171,16 @@ export const dashboardController = {
       const { domain } = req.params;
       const totalVisitorsData = await userPageInfoService.getTotalVisitors(domain);
       res.status(200).json(totalVisitorsData);
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  enrollClient: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { email, password, domain } = req.body;
+      const apiKey = await dashboardClientService.enrollClient(email, password, domain);
+      res.status(201).json({ message: '회원가입성공', apiKey });
     } catch (err) {
       next(err);
     }

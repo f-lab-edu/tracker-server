@@ -39,3 +39,4 @@ dashboardRouter.get(
   `/domains/:domain/pageInfo/totalVisitorsCount`,
   dashboardController.getTotalVisitors
 );
+dashboardRouter.post('/enrollClient', dashboardController.enrollClient);
