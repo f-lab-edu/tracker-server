@@ -9,7 +9,7 @@ export async function getClientDomain(apiKey: string) {
     raw: true,
   });
   if (!clientDomain) {
-    throw new Error('apiKey가 유효하지 않습니다');
+    throw new Error('apiKey 인증에러');
   }
 
   return clientDomain;

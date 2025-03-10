@@ -5,11 +5,7 @@ export const errorHandle = (err: Error, req: Request, res: Response, next: NextF
   if (res.headersSent) {
     return next(err);
   }
-  if (
-    err.message === '등록된 유저가 아닙니다.' ||
-    err.message === '비밀번호가 올바르지 않습니다.' ||
-    err.message === 'apiKey가 유효하지 않습니다'
-  ) {
+  if (err.message === '로그인 에러' || err.message === 'apiKey 인증실패') {
     res.status(401).json({ message: err.message });
   }
 
