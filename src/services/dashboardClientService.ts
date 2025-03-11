@@ -4,13 +4,12 @@ import { DashboardClientModel } from '../models/dashboardClientModel';
 export const dashboardClientService = {
   enrollClient: async (email: string, password: string, domain: string) => {
     const apiKey = crypto.randomBytes(32).toString('hex');
-    const hashedApiKey = crypto.createHash('sha256').update(apiKey).digest('hex');
     const hashedPassword = await bcrypt.hash(password, 10);
     await DashboardClientModel.create({
       email,
       hashedPassword,
       domain,
-      hashedApiKey,
+      apiKey,
     });
     return apiKey;
   },

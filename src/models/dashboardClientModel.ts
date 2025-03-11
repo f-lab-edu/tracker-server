@@ -9,7 +9,7 @@ DashboardClient.init(
     email: { type: DataTypes.STRING, allowNull: false, primaryKey: true, unique: true },
     hashedPassword: { type: DataTypes.STRING, allowNull: false },
     domain: { type: DataTypes.STRING, allowNull: false, unique: true },
-    hashedApiKey: { type: DataTypes.STRING, allowNull: false },
+    apiKey: { type: DataTypes.STRING, allowNull: false },
   },
   {
     sequelize,
