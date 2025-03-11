@@ -6,7 +6,6 @@ export const errorHandle = (err: Error, req: Request, res: Response, next: NextF
     return next(err);
   }
   if (
-    err.message === '도메인 에러' ||
     err.message === 'apiKey 인증실패' ||
     err.message === '로그인 필요' ||
     err.message === '이미 로그아웃'
