@@ -1,16 +1,14 @@
-import * as crypto from 'crypto';
 import { DashboardClientModel } from '../models/dashboardClientModel';
 
 export async function getClientDomain(apiKey: string) {
-  const hashedApiKey = crypto.createHash('sha256').update(apiKey).digest('hex');
   const clientDomain = await DashboardClientModel.findOne({
-    where: { hashedApiKey },
+    where: { apiKey },
     attributes: ['domain'],
-    raw: true,
   });
   if (!clientDomain) {
     throw new Error('apiKey 인증에러');
   }
+  const clientDomainForSdk: { domain: string } = clientDomain.get({ plain: true });
 
-  return clientDomain;
+  return clientDomainForSdk;
 }

@@ -13,8 +13,8 @@ export const authenticateAPIKey: RequestHandler = async (
   }
   const apiKey = authHeader.split(' ')[1];
   try {
-    const userDomain = await getClientDomain(apiKey);
-    res.locals.domain = userDomain;
+    const { domain } = await getClientDomain(apiKey);
+    res.locals.domain = domain;
     next();
   } catch (err) {
     next(err);
