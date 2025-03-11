@@ -196,4 +196,14 @@ export const dashboardController = {
       next(err);
     }
   },
+
+  logoutClient: (req: Request, res: Response) => {
+    if (!req.session.client) {
+      return;
+    }
+    req.session.destroy(() => {
+      res.clearCookie('connect.sid');
+      res.json({ message: '로그아웃 성공' });
+    });
+  },
 };

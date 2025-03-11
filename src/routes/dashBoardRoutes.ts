@@ -41,3 +41,4 @@ dashboardRouter.get(
 );
 dashboardRouter.post('/enrollClient', dashboardController.enrollClient);
 dashboardRouter.post('/loginClient', dashboardController.loginClient);
+dashboardRouter.post('/logoutClient', dashboardController.logoutClient);
