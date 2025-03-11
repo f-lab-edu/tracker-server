@@ -9,7 +9,11 @@ import { userPageInfoService } from '../services/userPageInfoService';
 export const dashboardController = {
   getOnlineUsersCount: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { domain } = req.params;
+      const domain = req.session.client?.domain;
+      if (!domain) {
+        next(new Error('로그인 필요'));
+        return;
+      }
       const onlineUsersCount = await userConnectionService.getOnlineUsersCount(domain);
       res.status(200).json({ onlineUsersCount });
     } catch (err) {
@@ -19,7 +23,11 @@ export const dashboardController = {
 
   getPerPageAverageScrollDepth: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { domain } = req.params;
+      const domain = req.session.client?.domain;
+      if (!domain) {
+        next(new Error('로그인 필요'));
+        return;
+      }
       const perPageAverageScrollDepth =
         await userActionService.getPerPageAverageScrollDepth(domain);
       res.status(200).json(perPageAverageScrollDepth);
@@ -30,7 +38,11 @@ export const dashboardController = {
 
   getPerPageBounceRate: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { domain } = req.params;
+      const domain = req.session.client?.domain;
+      if (!domain) {
+        next(new Error('로그인 필요'));
+        return;
+      }
       const bounceRate = await userActionService.getPerPageBounceRate(domain);
       res.status(200).json(bounceRate);
     } catch (err) {
@@ -40,7 +52,11 @@ export const dashboardController = {
 
   getBrowserStats: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { domain } = req.params;
+      const domain = req.session.client?.domain;
+      if (!domain) {
+        next(new Error('로그인 필요'));
+        return;
+      }
       const userBrowserStats = await userDeviceService.getBrowserStats(domain);
       res.status(200).json(userBrowserStats);
     } catch (err) {
@@ -50,7 +66,11 @@ export const dashboardController = {
 
   getOsStats: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { domain } = req.params;
+      const domain = req.session.client?.domain;
+      if (!domain) {
+        next(new Error('로그인 필요'));
+        return;
+      }
       const userOsStats = await userDeviceService.getOsStats(domain);
       res.status(200).json(userOsStats);
     } catch (err) {
@@ -60,7 +80,11 @@ export const dashboardController = {
 
   getDeviceStats: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { domain } = req.params;
+      const domain = req.session.client?.domain;
+      if (!domain) {
+        next(new Error('로그인 필요'));
+        return;
+      }
       const userDeviceStats = await userDeviceService.getDeviceStats(domain);
       res.status(200).json(userDeviceStats);
     } catch (err) {
@@ -70,7 +94,11 @@ export const dashboardController = {
 
   getResolutionStats: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { domain } = req.params;
+      const domain = req.session.client?.domain;
+      if (!domain) {
+        next(new Error('로그인 필요'));
+        return;
+      }
       const userResolutionStats = await userDeviceService.getResolutionStats(domain);
       res.status(200).json(userResolutionStats);
     } catch (err) {
@@ -80,7 +108,11 @@ export const dashboardController = {
 
   getLanguageStats: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { domain } = req.params;
+      const domain = req.session.client?.domain;
+      if (!domain) {
+        next(new Error('로그인 필요'));
+        return;
+      }
       const languageStats = await userInfoService.getLanguageStats(domain);
       res.status(200).json(languageStats);
     } catch (err) {
@@ -90,7 +122,11 @@ export const dashboardController = {
 
   getCountryStats: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { domain } = req.params;
+      const domain = req.session.client?.domain;
+      if (!domain) {
+        next(new Error('로그인 필요'));
+        return;
+      }
       const countryStats = await userInfoService.getCountryStats(domain);
       res.status(200).json(countryStats);
     } catch (err) {
@@ -100,7 +136,11 @@ export const dashboardController = {
 
   getVisitedUsersRate: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { domain } = req.params;
+      const domain = req.session.client?.domain;
+      if (!domain) {
+        next(new Error('로그인 필요'));
+        return;
+      }
       const getVisitedUsersRate = await userInfoService.getVisitedUsersRate(domain);
       res.status(200).json(getVisitedUsersRate);
     } catch (err) {
@@ -110,7 +150,11 @@ export const dashboardController = {
 
   getReferrerStats: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { domain } = req.params;
+      const domain = req.session.client?.domain;
+      if (!domain) {
+        next(new Error('로그인 필요'));
+        return;
+      }
       const referrerStatus = await userPageInfoService.getReferrerStats(domain);
       res.status(200).json(referrerStatus);
     } catch (err) {
@@ -120,7 +164,11 @@ export const dashboardController = {
 
   getAveragePageLoadTime: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { domain } = req.params;
+      const domain = req.session.client?.domain;
+      if (!domain) {
+        next(new Error('로그인 필요'));
+        return;
+      }
       const avgLoadTime = await userPageInfoService.getAveragePageLoadTime(domain);
       res.status(200).json(avgLoadTime);
     } catch (err) {
@@ -130,7 +178,11 @@ export const dashboardController = {
 
   getPageViewCount: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { domain } = req.params;
+      const domain = req.session.client?.domain;
+      if (!domain) {
+        next(new Error('로그인 필요'));
+        return;
+      }
       const { startDate, endDate } = req.query;
       if (typeof startDate !== 'string' || typeof endDate !== 'string') {
         res.status(400).json({ message: '시작 날짜와 종료날짜 올바르게 입력하세요' });
@@ -149,7 +201,11 @@ export const dashboardController = {
 
   getVisitorsByPeriod: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { domain } = req.params;
+      const domain = req.session.client?.domain;
+      if (!domain) {
+        next(new Error('로그인 필요'));
+        return;
+      }
       const { startDate, endDate } = req.query;
       if (typeof startDate !== 'string' || typeof endDate !== 'string') {
         res.status(400).json({ message: 'startDate와 endDate는 필수입니다.' });
@@ -168,7 +224,11 @@ export const dashboardController = {
 
   getTotalVisitors: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { domain } = req.params;
+      const domain = req.session.client?.domain;
+      if (!domain) {
+        next(new Error('로그인 필요'));
+        return;
+      }
       const totalVisitorsData = await userPageInfoService.getTotalVisitors(domain);
       res.status(200).json(totalVisitorsData);
     } catch (err) {
@@ -178,7 +238,12 @@ export const dashboardController = {
 
   enrollClient: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { email, password, domain } = req.body;
+      const { email, password } = req.body;
+      const domain = req.session.client?.domain;
+      if (!domain) {
+        next(new Error('로그인 필요'));
+        return;
+      }
       const apiKey = await dashboardClientService.enrollClient(email, password, domain);
       res.status(201).json({ message: '회원가입성공', apiKey });
     } catch (err) {
@@ -197,8 +262,9 @@ export const dashboardController = {
     }
   },
 
-  logoutClient: (req: Request, res: Response) => {
+  logoutClient: (req: Request, res: Response, next: NextFunction) => {
     if (!req.session.client) {
+      next(new Error('이미 로그아웃'));
       return;
     }
     req.session.destroy(() => {

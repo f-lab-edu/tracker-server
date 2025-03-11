@@ -5,7 +5,12 @@ export const errorHandle = (err: Error, req: Request, res: Response, next: NextF
   if (res.headersSent) {
     return next(err);
   }
-  if (err.message === '로그인 에러' || err.message === 'apiKey 인증실패') {
+  if (
+    err.message === '로그인 에러' ||
+    err.message === 'apiKey 인증실패' ||
+    err.message === '로그인 필요' ||
+    err.message === '이미 로그아웃'
+  ) {
     res.status(401).json({ message: err.message });
   }
 

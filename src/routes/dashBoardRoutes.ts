@@ -3,42 +3,24 @@ import { dashboardController } from '../controllers/dashboardController';
 
 export const dashboardRouter = express.Router();
 
-dashboardRouter.get('/userConnection/onlineUsersCount', dashboardController.getOnlineUsersCount);
-dashboardRouter.get('/userDevice/browsersStats', dashboardController.getBrowserStats);
-dashboardRouter.get('/userDevice/osStats', dashboardController.getOsStats);
-dashboardRouter.get('/userDevice/deviceStats', dashboardController.getDeviceStats);
-dashboardRouter.get('/userDevice/resolutionStats', dashboardController.getResolutionStats);
+dashboardRouter.get('/dashboard/onlineUsersCount', dashboardController.getOnlineUsersCount);
+dashboardRouter.get('/dashboard/browsersStats', dashboardController.getBrowserStats);
+dashboardRouter.get('/dashboard/osStats', dashboardController.getOsStats);
+dashboardRouter.get('/dashboard/deviceStats', dashboardController.getDeviceStats);
+dashboardRouter.get('/dashboard/resolutionStats', dashboardController.getResolutionStats);
+dashboardRouter.get('/dashboard/languageStats', dashboardController.getLanguageStats);
+dashboardRouter.get('/dashboard/countryStats', dashboardController.getCountryStats);
+dashboardRouter.get('/dashboard/visitedRate', dashboardController.getVisitedUsersRate);
+dashboardRouter.get('/dashboard/referrer', dashboardController.getReferrerStats);
+dashboardRouter.get('/dashboard/loadTime', dashboardController.getAveragePageLoadTime);
+dashboardRouter.get('/dashboard/visitorsPageByPeriodCount', dashboardController.getPageViewCount);
 dashboardRouter.get(
-  '/domains/:domain/userInfo/languageStats',
-  dashboardController.getLanguageStats
-);
-dashboardRouter.get('/domains/:domain/userInfo/countryStats', dashboardController.getCountryStats);
-dashboardRouter.get(
-  '/domains/:domain/userInfo/visitedRate',
-  dashboardController.getVisitedUsersRate
-);
-dashboardRouter.get('/domains/:domain/pageInfo/referrer', dashboardController.getReferrerStats);
-dashboardRouter.get(
-  '/domains/:domain/pageInfo/loadTime',
-  dashboardController.getAveragePageLoadTime
-);
-dashboardRouter.get(
-  '/domains/:domain/pageInfo/visitorsPageByPeriodCount',
-  dashboardController.getPageViewCount
-);
-dashboardRouter.get(
-  '/userAction/perPageAverageScrollDepth',
+  '/dashboard/perPageAverageScrollDepth',
   dashboardController.getPerPageAverageScrollDepth
 );
-dashboardRouter.get('/userAction/bounceRate', dashboardController.getPerPageBounceRate);
-dashboardRouter.get(
-  `/domains/:domain/pageInfo/visitorsByPeriodCount`,
-  dashboardController.getVisitorsByPeriod
-);
-dashboardRouter.get(
-  `/domains/:domain/pageInfo/totalVisitorsCount`,
-  dashboardController.getTotalVisitors
-);
-dashboardRouter.post('/enrollClient', dashboardController.enrollClient);
-dashboardRouter.post('/loginClient', dashboardController.loginClient);
-dashboardRouter.post('/logoutClient', dashboardController.logoutClient);
+dashboardRouter.get('/dashboard/bounceRate', dashboardController.getPerPageBounceRate);
+dashboardRouter.get(`/dashboard/visitorsByPeriodCount`, dashboardController.getVisitorsByPeriod);
+dashboardRouter.get(`/dashboard/totalVisitorsCount`, dashboardController.getTotalVisitors);
+dashboardRouter.post('/dashboard/enrollClient', dashboardController.enrollClient);
+dashboardRouter.post('/dashboard/loginClient', dashboardController.loginClient);
+dashboardRouter.post('/dashboard/logoutClient', dashboardController.logoutClient);
