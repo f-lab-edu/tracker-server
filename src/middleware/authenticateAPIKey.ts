@@ -1,5 +1,5 @@
 import { NextFunction, Request, RequestHandler, Response } from 'express';
-import { getAPIKeyFromDB } from '../services/apiKeyService';
+import { getClientDomain } from '../services/apiKeyService';
 
 export const authenticateAPIKey: RequestHandler = async (
   req: Request,
@@ -13,11 +13,7 @@ export const authenticateAPIKey: RequestHandler = async (
   }
   const apiKey = authHeader.split(' ')[1];
   try {
-    const domain = await getAPIKeyFromDB(apiKey);
-    if (!domain) {
-      res.status(403).json({ error: 'Forbidden: Invalid API Key' });
-      return;
-    }
+    const { domain } = await getClientDomain(apiKey);
     res.locals.domain = domain;
     next();
   } catch (err) {

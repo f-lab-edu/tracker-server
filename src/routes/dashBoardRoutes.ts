@@ -1,41 +1,82 @@
-import express from 'express';
+import express, { RequestHandler } from 'express';
 import { dashboardController } from '../controllers/dashboardController';
-
+import { ensureLogin } from '../middleware/ensureLogin';
 export const dashboardRouter = express.Router();
 
-dashboardRouter.get('/userConnection/onlineUsersCount', dashboardController.getOnlineUsersCount);
-dashboardRouter.get('/userDevice/browsersStats', dashboardController.getBrowserStats);
-dashboardRouter.get('/userDevice/osStats', dashboardController.getOsStats);
-dashboardRouter.get('/userDevice/deviceStats', dashboardController.getDeviceStats);
-dashboardRouter.get('/userDevice/resolutionStats', dashboardController.getResolutionStats);
 dashboardRouter.get(
-  '/domains/:domain/userInfo/languageStats',
-  dashboardController.getLanguageStats
-);
-dashboardRouter.get('/domains/:domain/userInfo/countryStats', dashboardController.getCountryStats);
-dashboardRouter.get(
-  '/domains/:domain/userInfo/visitedRate',
-  dashboardController.getVisitedUsersRate
-);
-dashboardRouter.get('/domains/:domain/pageInfo/referrer', dashboardController.getReferrerStats);
-dashboardRouter.get(
-  '/domains/:domain/pageInfo/loadTime',
-  dashboardController.getAveragePageLoadTime
+  '/dashboard/onlineUsersCount',
+  ensureLogin,
+  dashboardController.getOnlineUsersCount as RequestHandler
 );
 dashboardRouter.get(
-  '/domains/:domain/pageInfo/visitorsPageByPeriodCount',
-  dashboardController.getPageViewCount
+  '/dashboard/browsersStats',
+  ensureLogin,
+  dashboardController.getBrowserStats as RequestHandler
 );
 dashboardRouter.get(
-  '/userAction/perPageAverageScrollDepth',
-  dashboardController.getPerPageAverageScrollDepth
-);
-dashboardRouter.get('/userAction/bounceRate', dashboardController.getPerPageBounceRate);
-dashboardRouter.get(
-  `/domains/:domain/pageInfo/visitorsByPeriodCount`,
-  dashboardController.getVisitorsByPeriod
+  '/dashboard/osStats',
+  ensureLogin,
+  dashboardController.getOsStats as RequestHandler
 );
 dashboardRouter.get(
-  `/domains/:domain/pageInfo/totalVisitorsCount`,
-  dashboardController.getTotalVisitors
+  '/dashboard/deviceStats',
+  ensureLogin,
+  dashboardController.getDeviceStats as RequestHandler
 );
+dashboardRouter.get(
+  '/dashboard/resolutionStats',
+  ensureLogin,
+  dashboardController.getResolutionStats as RequestHandler
+);
+dashboardRouter.get(
+  '/dashboard/languageStats',
+  ensureLogin,
+  dashboardController.getLanguageStats as RequestHandler
+);
+dashboardRouter.get(
+  '/dashboard/countryStats',
+  ensureLogin,
+  dashboardController.getCountryStats as RequestHandler
+);
+dashboardRouter.get(
+  '/dashboard/visitedRate',
+  ensureLogin,
+  dashboardController.getVisitedUsersRate as RequestHandler
+);
+dashboardRouter.get(
+  '/dashboard/referrer',
+  ensureLogin,
+  dashboardController.getReferrerStats as RequestHandler
+);
+dashboardRouter.get(
+  '/dashboard/loadTime',
+  ensureLogin,
+  dashboardController.getAveragePageLoadTime as RequestHandler
+);
+dashboardRouter.get(
+  '/dashboard/visitorsPageByPeriodCount',
+  ensureLogin,
+  dashboardController.getPageViewCount as RequestHandler
+);
+dashboardRouter.get(
+  '/dashboard/perPageAverageScrollDepth',
+  dashboardController.getPerPageAverageScrollDepth as RequestHandler
+);
+dashboardRouter.get(
+  '/dashboard/bounceRate',
+  ensureLogin,
+  dashboardController.getPerPageBounceRate as RequestHandler
+);
+dashboardRouter.get(
+  '/dashboard/visitorsByPeriodCount',
+  ensureLogin,
+  dashboardController.getVisitorsByPeriod as RequestHandler
+);
+dashboardRouter.get(
+  '/dashboard/totalVisitorsCount',
+  ensureLogin,
+  dashboardController.getTotalVisitors as RequestHandler
+);
+dashboardRouter.post('/dashboard/enrollClient', dashboardController.enrollClient);
+dashboardRouter.post('/dashboard/loginClient', dashboardController.loginClient);
+dashboardRouter.post('/dashboard/logoutClient', dashboardController.logoutClient);
