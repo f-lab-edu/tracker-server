@@ -5,7 +5,7 @@ import { UUIDV4 } from 'sequelize';
 import { authenticateAPIKey } from './middleware/authenticateAPIKey';
 import { errorHandle } from './middleware/errorHandle';
 import { createSession } from './middleware/session';
-import { dashboardRouter } from './routes/dashBoardRoutes';
+import { dashboardRouter } from './routes/dashboardRoutes';
 import { trackerSdkRouter } from './routes/trackerSdkRoutes';
 const app = express();
 const port = 3000;
