@@ -5,7 +5,6 @@ import { createSession } from '../middleware/session';
 
 export const dashboardRouter = express.Router();
 
-dashboardRouter.use(createSession());
 dashboardRouter.get(
   '/dashboard/onlineUsersCount',
   ensureLogin,
@@ -81,5 +80,5 @@ dashboardRouter.get(
   dashboardController.getTotalVisitors as RequestHandler
 );
 dashboardRouter.post('/dashboard/enrollClient', dashboardController.enrollClient);
-dashboardRouter.post('/dashboard/loginClient', dashboardController.loginClient);
+dashboardRouter.post('/dashboard/loginClient', createSession, dashboardController.loginClient);
 dashboardRouter.post('/dashboard/logoutClient', dashboardController.logoutClient);
