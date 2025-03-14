@@ -9,15 +9,15 @@ import { trackerSdkRouter } from './routes/trackerSdkRoutes';
 const app = express();
 const port = 3000;
 
+app.use(express.json());
 app.use(createSession());
 app.use(
   cors({
-    origin: 'http://client-tracker-sdk',
+    origin: 'http://localhost:5173',
     credentials: true,
   })
 );
 app.use(cookieParser());
-app.use(express.json());
 app.get('/userCookieId', (req, res) => {
   let userId = req.body.userId;
   if (!userId) {
