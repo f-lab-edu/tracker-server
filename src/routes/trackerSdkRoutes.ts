@@ -1,24 +1,48 @@
 import express from 'express';
 import { trackerSdkController } from '../controllers/trackerSdkController';
 import { authenticateAPIKey } from '../middleware/authenticateAPIKey';
+import { trackerUserSetCookieId } from '../middleware/setCookieUser';
 export const trackerSdkRouter = express.Router();
 
 trackerSdkRouter.post(
-  '/domains/:domain/userInfo',
+  'trackerSdk/userInfo',
+  trackerUserSetCookieId,
   authenticateAPIKey,
   trackerSdkController.saveUserInfo
 );
-trackerSdkRouter.post('/userDevice', authenticateAPIKey, trackerSdkController.saveUserDevice);
-trackerSdkRouter.post('/userConnection', authenticateAPIKey, trackerSdkController.saveIsOnline);
-trackerSdkRouter.post('/pageInfo/referrer', authenticateAPIKey, trackerSdkController.saveReferrer);
-trackerSdkRouter.post('/pageInfo', authenticateAPIKey, trackerSdkController.savePageInfo);
 trackerSdkRouter.post(
-  '/userAction/userScrollDepth',
+  'trackerSdk/userDevice',
+  trackerUserSetCookieId,
+  authenticateAPIKey,
+  trackerSdkController.saveUserDevice
+);
+trackerSdkRouter.post(
+  'trackerSdk/userConnection',
+  trackerUserSetCookieId,
+  authenticateAPIKey,
+  trackerSdkController.saveIsOnline
+);
+trackerSdkRouter.post(
+  'trackerSdk/pageInfo/referrer',
+  trackerUserSetCookieId,
+  authenticateAPIKey,
+  trackerSdkController.saveReferrer
+);
+trackerSdkRouter.post(
+  'trackerSdk/pageInfo',
+  trackerUserSetCookieId,
+  authenticateAPIKey,
+  trackerSdkController.savePageInfo
+);
+trackerSdkRouter.post(
+  'trackerSdk/userAction/userScrollDepth',
+  trackerUserSetCookieId,
   authenticateAPIKey,
   trackerSdkController.saveUserScrollDepth
 );
 trackerSdkRouter.post(
-  '/userAction/bounceRate',
+  'trackerSdk/userAction/bounceRate',
+  trackerUserSetCookieId,
   authenticateAPIKey,
   trackerSdkController.saveBounceRate
 );

@@ -1,7 +1,6 @@
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
-import { UUIDV4 } from 'sequelize';
 import { errorHandle } from './middleware/errorHandle';
 import { createSession } from './middleware/session';
 import { dashboardRouter } from './routes/dashboardRoutes';
@@ -11,24 +10,8 @@ const port = 3000;
 
 app.use(express.json());
 app.use(createSession());
-app.use(
-  cors({
-    origin: 'http://localhost:5173',
-    credentials: true,
-  })
-);
+app.use(cors());
 app.use(cookieParser());
-app.get('/userCookieId', (req, res) => {
-  let userId = req.body.userId;
-  if (!userId) {
-    userId = UUIDV4();
-  }
-  res.setHeader(
-    'Set-Cookie',
-    `userId=${userId}; Max-Age=999999999 Path=/; SameSite=None; Secure; HttpOnly`
-  );
-  res.send({ success: true });
-});
 app.use(dashboardRouter);
 app.use(trackerSdkRouter);
 app.use(errorHandle);
