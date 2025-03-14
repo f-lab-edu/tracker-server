@@ -5,43 +5,43 @@ import { trackerUserSetCookieId } from '../middleware/setCookieUser';
 export const trackerSdkRouter = express.Router();
 
 trackerSdkRouter.post(
-  'trackerSdk/userInfo',
+  '/userInfo',
   trackerUserSetCookieId,
   authenticateAPIKey,
   trackerSdkController.saveUserInfo
 );
 trackerSdkRouter.post(
-  'trackerSdk/userDevice',
+  '/userDevice',
   trackerUserSetCookieId,
   authenticateAPIKey,
   trackerSdkController.saveUserDevice
 );
 trackerSdkRouter.post(
-  'trackerSdk/userConnection',
+  '/userConnection',
   trackerUserSetCookieId,
   authenticateAPIKey,
   trackerSdkController.saveIsOnline
 );
 trackerSdkRouter.post(
-  'trackerSdk/pageInfo/referrer',
+  '/pageInfo/referrer',
   trackerUserSetCookieId,
   authenticateAPIKey,
   trackerSdkController.saveReferrer
 );
 trackerSdkRouter.post(
-  'trackerSdk/pageInfo',
+  '/pageInfo',
   trackerUserSetCookieId,
   authenticateAPIKey,
   trackerSdkController.savePageInfo
 );
 trackerSdkRouter.post(
-  'trackerSdk/userAction/userScrollDepth',
+  '/userAction/userScrollDepth',
   trackerUserSetCookieId,
   authenticateAPIKey,
   trackerSdkController.saveUserScrollDepth
 );
 trackerSdkRouter.post(
-  'trackerSdk/userAction/bounceRate',
+  '/userAction/bounceRate',
   trackerUserSetCookieId,
   authenticateAPIKey,
   trackerSdkController.saveBounceRate
