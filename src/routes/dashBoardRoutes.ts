@@ -1,8 +1,11 @@
 import express, { RequestHandler } from 'express';
 import { dashboardController } from '../controllers/dashboardController';
 import { ensureLogin } from '../middleware/ensureLogin';
+import { createSession } from '../middleware/session';
+
 export const dashboardRouter = express.Router();
 
+dashboardRouter.use(createSession());
 dashboardRouter.get(
   '/dashboard/onlineUsersCount',
   ensureLogin,
