@@ -1,8 +1,18 @@
 import bcrypt from 'bcryptjs';
 import * as crypto from 'crypto';
+import { Op } from 'sequelize';
 import { DashboardClientModel } from '../models/dashboardClientModel';
 export const dashboardClientService = {
   enrollClient: async (email: string, password: string, domain: string) => {
+    const isExistingUser = await DashboardClientModel.findOne({
+      where: {
+        [Op.or]: [{ email }, { domain }],
+      },
+      attributes: ['id'],
+    });
+    if (isExistingUser) {
+      throw new Error('회원가입 에러');
+    }
     const apiKey = crypto.randomBytes(32).toString('hex');
     const hashedPassword = await bcrypt.hash(password, 10);
     await DashboardClientModel.create({

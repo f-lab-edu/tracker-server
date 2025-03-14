@@ -12,6 +12,9 @@ export const errorHandle = (err: Error, req: Request, res: Response, next: NextF
   ) {
     res.status(401).json({ message: err.message });
   }
+  if (err.message === '회원가입 에러') {
+    res.status(409).json({ error: err.message });
+  }
 
   res.status(500).json({ message: '서버 내부 오류', err: err.message });
 };
