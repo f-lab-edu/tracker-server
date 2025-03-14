@@ -1,12 +1,24 @@
 import express from 'express';
 import { trackerSdkController } from '../controllers/trackerSdkController';
-
+import { authenticateAPIKey } from '../middleware/authenticateAPIKey';
 export const trackerSdkRouter = express.Router();
 
-trackerSdkRouter.post('/domains/:domain/userInfo', trackerSdkController.saveUserInfo);
-trackerSdkRouter.post('/userDevice', trackerSdkController.saveUserDevice);
-trackerSdkRouter.post('/userConnection', trackerSdkController.saveIsOnline);
-trackerSdkRouter.post('/pageInfo/referrer', trackerSdkController.saveReferrer);
-trackerSdkRouter.post('/pageInfo', trackerSdkController.savePageInfo);
-trackerSdkRouter.post('/userAction/userScrollDepth', trackerSdkController.saveUserScrollDepth);
-trackerSdkRouter.post('/userAction/bounceRate', trackerSdkController.saveBounceRate);
+trackerSdkRouter.post(
+  '/domains/:domain/userInfo',
+  authenticateAPIKey,
+  trackerSdkController.saveUserInfo
+);
+trackerSdkRouter.post('/userDevice', authenticateAPIKey, trackerSdkController.saveUserDevice);
+trackerSdkRouter.post('/userConnection', authenticateAPIKey, trackerSdkController.saveIsOnline);
+trackerSdkRouter.post('/pageInfo/referrer', authenticateAPIKey, trackerSdkController.saveReferrer);
+trackerSdkRouter.post('/pageInfo', authenticateAPIKey, trackerSdkController.savePageInfo);
+trackerSdkRouter.post(
+  '/userAction/userScrollDepth',
+  authenticateAPIKey,
+  trackerSdkController.saveUserScrollDepth
+);
+trackerSdkRouter.post(
+  '/userAction/bounceRate',
+  authenticateAPIKey,
+  trackerSdkController.saveBounceRate
+);
