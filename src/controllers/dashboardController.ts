@@ -194,8 +194,8 @@ export const dashboardController = {
   loginClient: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { email, password } = req.body;
-      const domain = await dashboardClientService.loginClient(email, password);
-      req.session.client = { email, domain };
+      const clientInfo = await dashboardClientService.loginClient(email, password);
+      req.session.client = { email, domain: clientInfo.domain, apiKey: clientInfo.apiKey };
       res.status(200).json({ message: '로그인 성공' });
     } catch (err) {
       next(err);
@@ -211,5 +211,13 @@ export const dashboardController = {
       res.clearCookie('connect.sid');
       res.json({ message: '로그아웃 성공' });
     });
+  },
+
+  sessionClient: (req: Request, res: Response) => {
+    if (req.session.client) {
+      res.json({ user: req.session.client });
+    } else {
+      res.status(401).json({ message: '세션없음' });
+    }
   },
 };

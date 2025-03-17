@@ -8,6 +8,7 @@ export interface AuthenticatedRequest<ReqQuery = ParsedQs>
     client: {
       email: string;
       domain: string;
+      apiKey: string;
     };
   };
 }

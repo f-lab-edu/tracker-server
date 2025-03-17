@@ -27,16 +27,18 @@ export const dashboardClientService = {
   loginClient: async (email: string, password: string) => {
     const client = await DashboardClientModel.findOne({
       where: { email },
-      attributes: ['hashedPassword', 'domain'],
+      attributes: ['hashedPassword', 'domain', 'apiKey'],
     });
     if (!client) {
       throw new Error('로그인 에러');
     }
-    const clientData: { hashedPassword: string; domain: string } = client.get({ plain: true });
+    const clientData: { hashedPassword: string; domain: string; apiKey: string } = client.get({
+      plain: true,
+    });
     const isValidPassword = await bcrypt.compare(password, clientData.hashedPassword);
     if (!isValidPassword) {
       throw new Error('로그인 에러');
     }
-    return clientData.domain;
+    return { domain: clientData.domain, apiKey: clientData.apiKey };
   },
 };

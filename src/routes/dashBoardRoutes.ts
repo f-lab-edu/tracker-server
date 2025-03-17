@@ -1,7 +1,6 @@
 import express, { RequestHandler } from 'express';
 import { dashboardController } from '../controllers/dashboardController';
 import { ensureLogin } from '../middleware/ensureLogin';
-import { createSession } from '../middleware/session';
 
 export const dashboardRouter = express.Router();
 
@@ -76,5 +75,6 @@ dashboardRouter.get(
   dashboardController.getTotalVisitors as RequestHandler
 );
 dashboardRouter.post('/enrollClient', dashboardController.enrollClient);
-dashboardRouter.post('/loginClient', createSession, dashboardController.loginClient);
+dashboardRouter.post('/loginClient', dashboardController.loginClient);
 dashboardRouter.post('/logoutClient', dashboardController.logoutClient);
+dashboardRouter.get('/sessionClient', dashboardController.sessionClient);

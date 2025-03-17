@@ -5,6 +5,7 @@ declare module 'express-session' {
     client?: {
       email: string;
       domain: string;
+      apiKey: string;
     };
   }
 }
