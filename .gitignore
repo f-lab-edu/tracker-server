@@ -11,7 +11,7 @@ dist
 *.log
 *.tsbuildinfo
 *.yml
-
+*.pem
 .vscode/
 
 
