@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import { UUIDV4 } from 'sequelize';
 import { userActionService } from '../services/userActionService';
 import { userConnectionService } from '../services/userConnectionService';
 import { userDeviceService } from '../services/userDeviceService';
@@ -86,6 +87,22 @@ export const trackerSdkController = {
       const userId = req.cookies.userId;
       await userPageInfoService.savePageInfo({ ...req.body, domain, userId });
       res.send(201).json('페이지 로드 시간 저장완료');
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  userCookie: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      let userId = req.cookies.userId;
+      if (!userId) {
+        userId = UUIDV4();
+      }
+      res.setHeader(
+        'Set-Cookie',
+        `userId=${userId}; Max-Age=999999999; Path=/; SameSite=None; Secure; HttpOnly`
+      );
+      res.send({ success: true });
     } catch (err) {
       next(err);
     }

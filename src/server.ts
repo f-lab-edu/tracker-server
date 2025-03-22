@@ -17,7 +17,16 @@ const options = {
   cert: fs.readFileSync(path.resolve(__dirname, '../localhost.pem')),
 };
 
-app.use(cors({ origin: 'https://localhost:5173', credentials: true }));
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      callback(null, origin);
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 app.use(createSession);
