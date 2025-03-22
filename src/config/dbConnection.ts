@@ -1,5 +1,5 @@
+import '../models';
 import sequelize from './db';
-
 const DbConnection = async () => {
   try {
     await sequelize.authenticate();
