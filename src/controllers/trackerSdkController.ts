@@ -86,7 +86,7 @@ export const trackerSdkController = {
       const domain = res.locals.domain;
       const userId = req.cookies.userId;
       await userPageInfoService.savePageInfo({ ...req.body, domain, userId });
-      res.send(201).json('페이지 로드 시간 저장완료');
+      res.status(201).json('페이지 로드 시간 저장완료');
     } catch (err) {
       next(err);
     }
