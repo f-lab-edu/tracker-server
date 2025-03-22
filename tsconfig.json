@@ -7,6 +7,6 @@
     "strict": true,
     "esModuleInterop": true
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "eslint.config.mjs"],
   "ts-node": { "files": true }
 }

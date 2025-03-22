@@ -3,7 +3,7 @@ import cors from 'cors';
 import express from 'express';
 import { errorHandle } from './middleware/errorHandle';
 import { createSession } from './middleware/session';
-import { dashboardRouter } from './routes/dashboardRoutesTemp';
+import { dashboardRouter } from './routes/dashboardRoutes';
 import { trackerSdkRouter } from './routes/trackerSdkRoutes';
 
 const app = express();
