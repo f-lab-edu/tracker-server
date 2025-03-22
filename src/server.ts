@@ -10,10 +10,16 @@ import { trackerSdkRouter } from './routes/trackerSdkRoutes';
 const app = express();
 const port = 3000;
 
+const allowedOrigins = ['https://next-yt-music-dun.vercel.app', 'https://tracker-dashboard.site'];
+
 app.use(
   cors({
     origin: (origin, callback) => {
-      callback(null, origin);
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
     },
     credentials: true,
     methods: ['GET', 'POST', 'OPTIONS'],
