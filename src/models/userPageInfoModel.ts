@@ -18,6 +18,12 @@ UserPageInfo.init(
     modelName: 'userPageInfo',
     tableName: 'userPageInfos',
     timestamps: true,
+    indexes: [
+      {
+        unique: true,
+        fields: ['userId', 'domain', 'url', 'date'],
+      },
+    ],
   }
 );
 
