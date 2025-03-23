@@ -13,8 +13,5 @@ trackerSdkRouter.post(
   authenticateAPIKey,
   trackerSdkController.saveUserScrollDepth
 );
-trackerSdkRouter.post(
-  '/userAction/bounceRate',
-  authenticateAPIKey,
-  trackerSdkController.saveBounceRate
-);
+trackerSdkRouter.post('/userAction/bounceRate/beacon', trackerSdkController.saveBounceRateBeacon);
+trackerSdkRouter.post('/userConnection/beacon', trackerSdkController.saveOfflineBeacon);
