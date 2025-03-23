@@ -18,4 +18,3 @@ trackerSdkRouter.post(
   authenticateAPIKey,
   trackerSdkController.saveBounceRate
 );
-trackerSdkRouter.get('/userCookieId', trackerSdkController.userCookie);

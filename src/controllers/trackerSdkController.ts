@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from 'express';
-import { v4 as UUIDV4 } from 'uuid';
 import { userActionService } from '../services/userActionService';
 import { userConnectionService } from '../services/userConnectionService';
 import { userDeviceService } from '../services/userDeviceService';
@@ -10,7 +9,7 @@ export const trackerSdkController = {
   saveIsOnline: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const domain = res.locals.domain;
-      const userId = req.cookies.userId;
+      const userId = req.headers['x-user-id'] as string;
       const { isOnline } = req.body;
       const existingUser = await userConnectionService.findByUserId(domain, userId);
       if (!existingUser) {
@@ -28,7 +27,7 @@ export const trackerSdkController = {
   saveUserScrollDepth: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const domain = res.locals.domain;
-      const userId = req.cookies.userId;
+      const userId = req.headers['x-user-id'] as string;
       await userActionService.saveUserScrollDepth({ ...req.body, domain, userId });
       res.status(201).json({ message: '스크롤깊이 전송 성공' });
     } catch (err) {
@@ -39,7 +38,7 @@ export const trackerSdkController = {
   saveBounceRate: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const domain = res.locals.domain;
-      const userId = req.cookies.userId;
+      const userId = req.headers['x-user-id'] as string;
       const url = req.body.url;
       await userActionService.saveBounceRate(domain, userId, url);
       res.status(201).json({ message: '이탈여부 전송 성공' });
@@ -51,7 +50,7 @@ export const trackerSdkController = {
   saveUserDevice: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const domain = res.locals.domain;
-      const userId = req.cookies.userId;
+      const userId = req.headers['x-user-id'] as string;
       await userDeviceService.saveUserDevice({ ...req.body, domain, userId });
       res.status(201).json({ message: '유저 디바이스 정보 전송 성공' });
     } catch (err) {
@@ -62,7 +61,7 @@ export const trackerSdkController = {
   saveUserInfo: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { domain } = req.params;
-      const userId = req.cookies.userId;
+      const userId = req.headers['x-user-id'] as string;
       await userInfoService.saveUserInfo({ ...req.body, domain, userId });
       res.status(201).json({ message: '유저 정보 전송 성공' });
     } catch (err) {
@@ -73,7 +72,7 @@ export const trackerSdkController = {
   saveReferrer: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const domain = res.locals.domain;
-      const userId = req.cookies.userId;
+      const userId = req.headers['x-user-id'] as string;
       await userPageInfoService.saveReferrer({ ...req.body, domain, userId });
       res.status(201).json({ message: '유입 경로 저장완료' });
     } catch (err) {
@@ -84,27 +83,9 @@ export const trackerSdkController = {
   savePageInfo: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const domain = res.locals.domain;
-      const userId = req.cookies.userId;
+      const userId = req.headers['x-user-id'] as string;
       await userPageInfoService.savePageInfo({ ...req.body, domain, userId });
       res.status(201).json({ message: '페이지 로드 시간 저장완료' });
-    } catch (err) {
-      next(err);
-    }
-  },
-
-  userCookie: async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      let userId = req.cookies.userId;
-      if (!userId) {
-        userId = UUIDV4();
-      }
-      res.cookie('userId', userId, {
-        maxAge: 999999999,
-        httpOnly: true,
-        secure: true,
-        sameSite: 'none',
-      });
-      res.status(200).json({ success: true });
     } catch (err) {
       next(err);
     }
