@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { UUIDV4 } from 'sequelize';
+import { v4 as UUIDV4 } from 'uuid';
 import { userActionService } from '../services/userActionService';
 import { userConnectionService } from '../services/userConnectionService';
 import { userDeviceService } from '../services/userDeviceService';

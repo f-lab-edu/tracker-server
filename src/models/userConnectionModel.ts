@@ -16,6 +16,12 @@ UserConnection.init(
     modelName: 'userConnection',
     tableName: 'userConnections',
     timestamps: true,
+    indexes: [
+      {
+        unique: true,
+        fields: ['userId', 'domain'],
+      },
+    ],
   }
 );
 

@@ -11,7 +11,8 @@ class UserAction extends Model {
 
 UserAction.init(
   {
-    userId: { type: DataTypes.STRING, allowNull: false, primaryKey: true },
+    id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+    userId: { type: DataTypes.STRING, allowNull: false },
     domain: { type: DataTypes.STRING, allowNull: false },
     url: { type: DataTypes.STRING, allowNull: false },
     scrollDepth: { type: DataTypes.INTEGER, allowNull: true, defaultValue: null },
@@ -24,4 +25,5 @@ UserAction.init(
     timestamps: false,
   }
 );
+
 export const UserActionModel = UserAction;

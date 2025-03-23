@@ -16,6 +16,12 @@ UserInfo.init(
     modelName: 'userInfo',
     tableName: 'userInfos',
     timestamps: true,
+    indexes: [
+      {
+        unique: true,
+        fields: ['userId', 'domain'],
+      },
+    ],
   }
 );
 
