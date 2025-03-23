@@ -98,11 +98,13 @@ export const trackerSdkController = {
       if (!userId) {
         userId = UUIDV4();
       }
-      res.setHeader(
-        'Set-Cookie',
-        `userId=${userId}; Max-Age=999999999; Path=/; SameSite=None; Secure; HttpOnly`
-      );
-      res.send({ success: true });
+      res.cookie('userId', userId, {
+        maxAge: 999999999,
+        httpOnly: true,
+        secure: true,
+        sameSite: 'none',
+      });
+      res.status(200).json({ success: true });
     } catch (err) {
       next(err);
     }
