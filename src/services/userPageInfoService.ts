@@ -20,7 +20,7 @@ export const userPageInfoService = {
   },
 
   savePageInfo: async (data: PageLoadInfo) => {
-    const today = new Date();
+    const today = new Date().toISOString().split('T')[0];
     const existingRecord = await UserPageInfoModel.findOne({
       where: { domain: data.domain, url: data.url, userId: data.userId, date: today },
     });
