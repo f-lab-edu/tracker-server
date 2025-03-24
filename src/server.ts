@@ -10,18 +10,24 @@ import { trackerSdkRouter } from './routes/trackerSdkRoutes';
 const app = express();
 const port = 3000;
 
-app.use(
-  cors({
-    origin: '*',
-    methods: ['GET', 'POST', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'x-user-id'],
-  })
-);
+const sdkCors = cors({
+  origin: '*',
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-user-id'],
+  credentials: false,
+});
+
+const dashboardCors = cors({
+  origin: 'https://tracker-dashboard.site',
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+});
 app.use(express.json());
 app.use(cookieParser());
 app.use(createSession);
-app.use('/dashboard', dashboardRouter);
-app.use('/trackerSdk', trackerSdkRouter);
+app.use('/dashboard', dashboardCors, dashboardRouter);
+app.use('/trackerSdk', sdkCors, trackerSdkRouter);
 app.use(errorHandle);
 
 app.get('/', (req, res) => {
