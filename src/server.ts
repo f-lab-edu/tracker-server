@@ -1,8 +1,9 @@
 import cookieParser from 'cookie-parser';
-import cors from 'cors';
 import express from 'express';
 import './config/dbConnection';
+import { dashboardCors } from './middleware/dashboardCors';
 import { errorHandle } from './middleware/errorHandle';
+import { sdkCors } from './middleware/sdkCors';
 import { createSession } from './middleware/session';
 import { dashboardRouter } from './routes/dashboardRoutes';
 import { trackerSdkRouter } from './routes/trackerSdkRoutes';
@@ -10,23 +11,9 @@ import { trackerSdkRouter } from './routes/trackerSdkRoutes';
 const app = express();
 const port = 3000;
 
-const sdkCors = cors({
-  origin: '*',
-  methods: ['GET', 'POST'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'x-user-id'],
-  credentials: false,
-});
-
-const dashboardCors = cors({
-  origin: 'https://tracker-dashboard.site',
-  methods: ['GET', 'POST'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,
-});
 app.use(express.json());
 app.use(cookieParser());
-app.use(createSession);
-app.use('/dashboard', dashboardCors, dashboardRouter);
+app.use('/dashboard', dashboardCors, createSession, dashboardRouter);
 app.use('/trackerSdk', sdkCors, trackerSdkRouter);
 app.use(errorHandle);
 
