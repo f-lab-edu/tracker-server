@@ -10,7 +10,7 @@ import { trackerSdkRouter } from './routes/trackerSdkRoutes';
 
 const app = express();
 const port = 3000;
-
+app.set('trust proxy', 1);
 app.use(express.json());
 app.use(cookieParser());
 app.use('/dashboard', dashboardCors, createSession, dashboardRouter);
