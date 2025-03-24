@@ -183,6 +183,8 @@ export const dashboardController = {
 
   loginClient: async (req: Request, res: Response, next: NextFunction) => {
     try {
+      console.log('req.secure:', req.secure);
+      console.log('x-forwarded-proto:', req.headers['x-forwarded-proto']);
       const { email, password } = req.body;
       const clientInfo = await dashboardClientService.loginClient(email, password);
       req.session.client = { email, domain: clientInfo.domain, apiKey: clientInfo.apiKey };
