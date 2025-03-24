@@ -9,7 +9,6 @@ UserPageInfo.init(
     domain: { type: DataTypes.STRING, allowNull: false },
     referrer: { type: DataTypes.STRING, allowNull: true },
     url: { type: DataTypes.STRING, allowNull: false },
-    loadTime: { type: DataTypes.FLOAT, allowNull: true },
     visitCount: { type: DataTypes.INTEGER, allowNull: false },
     date: { type: DataTypes.DATEONLY, allowNull: false },
   },

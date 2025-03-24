@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import sequelize from '../config/db';
 import { UserActionModel } from '../models/userActionModel';
 import { UserScroll } from '../types/userActionType';
@@ -19,7 +20,7 @@ export const userActionService = {
       await UserActionModel.create({ ...data });
     }
   },
-  
+
   saveBounceRate: async (domain: string, userId: string, url: string) => {
     await UserActionModel.create({
       domain,
@@ -32,19 +33,11 @@ export const userActionService = {
 
   getPerPageAverageScrollDepth: async (domain: string) => {
     const results = await UserActionModel.findAll({
-      where: { domain },
-      attributes: [
-        'url',
-        [
-          sequelize.fn(
-            'AVG',
-            sequelize.literal(
-              '(SELECT MAX(scrollDepth) FROM userActions AS ua WHERE ua.userId = userAction.userId AND ua.url = userAction.url)'
-            )
-          ),
-          'avgScrollDepth',
-        ],
-      ],
+      where: {
+        domain,
+        scrollDepth: { [Op.ne]: null },
+      },
+      attributes: ['url', [sequelize.fn('AVG', sequelize.col('scrollDepth')), 'avgScrollDepth']],
       group: ['url'],
       raw: true,
     });

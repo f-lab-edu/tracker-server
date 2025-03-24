@@ -1,10 +1,10 @@
 import { Op } from 'sequelize';
 import sequelize from '../config/db';
 import { UserPageInfoModel } from '../models/userPageInfoModel';
-import { PageInfo, PageLoadInfo } from '../types/userPageType';
+import { PageInfo, PageInfoRefer } from '../types/userPageType';
 
 export const userPageInfoService = {
-  saveReferrer: async (data: PageInfo) => {
+  saveReferrer: async (data: PageInfoRefer) => {
     const existingRecord = await UserPageInfoModel.findOne({
       where: { userId: data.userId, domain: data.domain },
     });
@@ -19,14 +19,14 @@ export const userPageInfoService = {
     return null;
   },
 
-  savePageInfo: async (data: PageLoadInfo) => {
+  savePageInfo: async (data: PageInfo) => {
     const today = new Date().toISOString().split('T')[0];
     const existingRecord = await UserPageInfoModel.findOne({
       where: { domain: data.domain, url: data.url, userId: data.userId, date: today },
     });
     if (existingRecord) {
       return await UserPageInfoModel.update(
-        { loadTime: data.loadTime, visitCount: sequelize.literal('visitCount + 1') },
+        { visitCount: sequelize.literal('visitCount + 1') },
         { where: { domain: data.domain, url: data.url, userId: data.userId, date: today } }
       );
     } else {
@@ -42,16 +42,6 @@ export const userPageInfoService = {
       raw: true,
     });
     return referrerCounts;
-  },
-
-  getAveragePageLoadTime: async (domain: string) => {
-    const avgLoadTimes = await UserPageInfoModel.findAll({
-      where: { domain },
-      attributes: ['url', [sequelize.fn('AVG', sequelize.col('loadTime')), 'avgLoadTime']],
-      group: ['url'],
-      raw: true,
-    });
-    return avgLoadTimes;
   },
 
   getPerDayPageViewCounts: async (domain: string, startDate: string, endDate: string) => {
