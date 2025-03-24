@@ -123,16 +123,6 @@ export const dashboardController = {
     }
   },
 
-  getAveragePageLoadTime: async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
-    try {
-      const domain = req.session.client.domain;
-      const avgLoadTime = await userPageInfoService.getAveragePageLoadTime(domain);
-      res.status(200).json(avgLoadTime);
-    } catch (err) {
-      next(err);
-    }
-  },
-
   getPageViewCount: async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     try {
       const domain = req.session.client.domain;

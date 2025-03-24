@@ -46,11 +46,6 @@ dashboardRouter.get(
   dashboardController.getReferrerStats as RequestHandler
 );
 dashboardRouter.get(
-  '/loadTime',
-  ensureLogin,
-  dashboardController.getAveragePageLoadTime as RequestHandler
-);
-dashboardRouter.get(
   '/visitorsPageByPeriodCount',
   ensureLogin,
   dashboardController.getPageViewCount as RequestHandler
