@@ -1,4 +1,4 @@
-import { Op } from 'sequelize';
+import { Op, QueryTypes } from 'sequelize';
 import sequelize from '../config/db';
 import { UserPageInfoModel } from '../models/userPageInfoModel';
 import { PageInfo, PageInfoRefer } from '../types/userPageType';
@@ -21,24 +21,19 @@ export const userPageInfoService = {
 
   savePageInfo: async (data: PageInfo) => {
     const today = new Date().toISOString().split('T')[0];
-
-    const [record, created] = await UserPageInfoModel.findOrCreate({
-      where: {
-        domain: data.domain,
-        url: data.url,
-        userId: data.userId,
-        date: today,
-      },
-      defaults: {
-        ...data,
-        visitCount: 1,
-        date: today,
-      },
-    });
-
-    if (!created) {
-      await record.increment('visitCount');
-    }
+    await sequelize.query(
+      `
+      INSERT INTO userPageInfos (userId, domain, url, referrer, date, visitCount, createdAt, updatedAt)
+      VALUES (?, ?, ?, ?, ?, 1, NOW(), NOW())
+      ON DUPLICATE KEY UPDATE 
+        visitCount = visitCount + 1,
+        updatedAt = NOW();
+      `,
+      {
+        replacements: [data.userId, data.domain, data.url, null, today],
+        type: QueryTypes.INSERT,
+      }
+    );
   },
 
   getReferrerStats: async (domain: string) => {
