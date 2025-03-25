@@ -183,8 +183,6 @@ export const dashboardController = {
 
   loginClient: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      console.log('req.secure:', req.secure);
-      console.log('x-forwarded-proto:', req.headers['x-forwarded-proto']);
       const { email, password } = req.body;
       const clientInfo = await dashboardClientService.loginClient(email, password);
       req.session.client = { email, domain: clientInfo.domain, apiKey: clientInfo.apiKey };
@@ -193,7 +191,6 @@ export const dashboardController = {
           console.error('세션 저장 실패:', err);
           return res.status(500).json({ message: '세션 저장 실패' });
         }
-        console.log('세션 저장 성공');
         res.status(200).json({ message: '로그인 성공' });
       });
     } catch (err) {

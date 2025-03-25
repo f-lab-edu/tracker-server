@@ -21,16 +21,23 @@ export const userPageInfoService = {
 
   savePageInfo: async (data: PageInfo) => {
     const today = new Date().toISOString().split('T')[0];
-    const existingRecord = await UserPageInfoModel.findOne({
-      where: { domain: data.domain, url: data.url, userId: data.userId, date: today },
+
+    const [record, created] = await UserPageInfoModel.findOrCreate({
+      where: {
+        domain: data.domain,
+        url: data.url,
+        userId: data.userId,
+        date: today,
+      },
+      defaults: {
+        ...data,
+        visitCount: 1,
+        date: today,
+      },
     });
-    if (existingRecord) {
-      return await UserPageInfoModel.update(
-        { visitCount: sequelize.literal('visitCount + 1') },
-        { where: { domain: data.domain, url: data.url, userId: data.userId, date: today } }
-      );
-    } else {
-      return await UserPageInfoModel.create({ ...data, visitCount: 1, date: today });
+
+    if (!created) {
+      await record.increment('visitCount');
     }
   },
 
