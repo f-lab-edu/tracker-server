@@ -93,6 +93,7 @@ export const trackerSdkController = {
 
   saveBounceRateBeacon: async (req: Request, res: Response, next: NextFunction) => {
     try {
+      console.log('sendOffline 수신됨', req.body);
       const { apiKey, userId, url } = req.body;
       const { domain } = await getClientDomain(apiKey);
       await userActionService.saveBounceRate(domain, userId, url);
