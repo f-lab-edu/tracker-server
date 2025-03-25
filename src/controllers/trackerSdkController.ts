@@ -84,6 +84,7 @@ export const trackerSdkController = {
     try {
       const { apiKey, userId, isOnline } = req.body;
       const { domain } = await getClientDomain(apiKey);
+      console.log('req.body saveOfflineBeacon', req.body);
       await userConnectionService.updateIsOnline(domain, userId, isOnline);
       res.status(200).json({ success: true });
     } catch (err) {

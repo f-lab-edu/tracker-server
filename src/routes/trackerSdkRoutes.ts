@@ -1,6 +1,7 @@
 import express from 'express';
 import { trackerSdkController } from '../controllers/trackerSdkController';
 import { authenticateAPIKey } from '../middleware/authenticateAPIKey';
+import { parseBeaconBody } from '../middleware/parseBeaconBody';
 export const trackerSdkRouter = express.Router();
 
 trackerSdkRouter.post('/userInfo', authenticateAPIKey, trackerSdkController.saveUserInfo);
@@ -13,5 +14,15 @@ trackerSdkRouter.post(
   authenticateAPIKey,
   trackerSdkController.saveUserScrollDepth
 );
-trackerSdkRouter.post('/userAction/bounceRate/beacon', trackerSdkController.saveBounceRateBeacon);
-trackerSdkRouter.post('/userConnection/beacon', trackerSdkController.saveOfflineBeacon);
+trackerSdkRouter.post(
+  '/userAction/bounceRate/beacon',
+  express.text(),
+  parseBeaconBody,
+  trackerSdkController.saveBounceRateBeacon
+);
+trackerSdkRouter.post(
+  '/userConnection/beacon',
+  express.text(),
+  parseBeaconBody,
+  trackerSdkController.saveOfflineBeacon
+);
