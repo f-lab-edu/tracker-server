@@ -25,17 +25,6 @@ export const trackerSdkController = {
     }
   },
 
-  saveUserScrollDepth: async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const domain = res.locals.domain;
-      const userId = req.headers['x-user-id'] as string;
-      await userActionService.saveUserScrollDepth({ ...req.body, domain, userId });
-      res.status(201).json({ message: '스크롤깊이 전송 성공' });
-    } catch (err) {
-      next(err);
-    }
-  },
-
   saveUserDevice: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const domain = res.locals.domain;
@@ -99,6 +88,18 @@ export const trackerSdkController = {
       const { domain } = await getClientDomain(apiKey);
       await userActionService.saveBounceRate(domain, userId, url);
       res.status(201).json({ message: '이탈여부 전송 성공' });
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  saveUserScrollDepthBeacon: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      console.log('sendScrollDepthBeacon', req.body);
+      const { apiKey, url, scrollDepth, userId } = req.body;
+      const { domain } = await getClientDomain(apiKey);
+      await userActionService.saveUserScrollDepth({ domain, userId, scrollDepth, url });
+      res.status(201).json({ message: '스크롤깊이 전송 성공' });
     } catch (err) {
       next(err);
     }

@@ -10,9 +10,10 @@ trackerSdkRouter.post('/userConnection', authenticateAPIKey, trackerSdkControlle
 trackerSdkRouter.post('/pageInfo/referrer', authenticateAPIKey, trackerSdkController.saveReferrer);
 trackerSdkRouter.post('/pageInfo', authenticateAPIKey, trackerSdkController.savePageInfo);
 trackerSdkRouter.post(
-  '/userAction/userScrollDepth',
-  authenticateAPIKey,
-  trackerSdkController.saveUserScrollDepth
+  '/userAction/userScrollDepth/beacon',
+  express.text(),
+  parseBeaconBody,
+  trackerSdkController.saveUserScrollDepthBeacon
 );
 trackerSdkRouter.post(
   '/userAction/bounceRate/beacon',
