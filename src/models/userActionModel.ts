@@ -16,7 +16,7 @@ UserAction.init(
     domain: { type: DataTypes.STRING, allowNull: false },
     url: { type: DataTypes.STRING, allowNull: false },
     scrollDepth: { type: DataTypes.INTEGER, allowNull: true, defaultValue: null },
-    isBounced: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
+    isBounced: { type: DataTypes.BOOLEAN, allowNull: true, defaultValue: null },
   },
   {
     sequelize,
