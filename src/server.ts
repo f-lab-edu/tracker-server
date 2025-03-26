@@ -1,4 +1,5 @@
 import cookieParser from 'cookie-parser';
+import dotenv from 'dotenv';
 import express from 'express';
 import './config/dbConnection';
 import { dashboardCors } from './middleware/dashboardCors';
@@ -8,6 +9,7 @@ import { createSession } from './middleware/session';
 import { dashboardRouter } from './routes/dashboardRoutes';
 import { trackerSdkRouter } from './routes/trackerSdkRoutes';
 
+dotenv.config();
 const app = express();
 const port = 3000;
 app.set('trust proxy', 1);
