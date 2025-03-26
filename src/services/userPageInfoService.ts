@@ -5,7 +5,6 @@ import { PageInfo, PageInfoRefer } from '../types/userPageType';
 
 export const userPageInfoService = {
   saveReferrer: async (data: PageInfoRefer) => {
-    console.log('saveReferrer data', data);
     const existingRecord = await UserPageInfoModel.findOne({
       where: { userId: data.userId, domain: data.domain },
     });

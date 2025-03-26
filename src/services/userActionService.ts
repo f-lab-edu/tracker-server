@@ -5,7 +5,6 @@ import { UserScroll } from '../types/userActionType';
 
 export const userActionService = {
   saveUserScrollDepth: async (data: UserScroll) => {
-    console.log('saveUserScrollDepth', data);
     const existingScrolled = await UserActionModel.findOne({
       where: { userId: data.userId, domain: data.domain, url: data.url },
     });
@@ -23,7 +22,6 @@ export const userActionService = {
   },
 
   saveBounceRate: async (domain: string, userId: string, url: string) => {
-    console.log('saveBounceRate');
     await UserActionModel.create({
       domain,
       userId,

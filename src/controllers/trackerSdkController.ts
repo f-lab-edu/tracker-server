@@ -73,7 +73,6 @@ export const trackerSdkController = {
     try {
       const { apiKey, userId, isOnline } = req.body;
       const { domain } = await getClientDomain(apiKey);
-      console.log('req.body saveOfflineBeacon', req.body);
       await userConnectionService.updateIsOnline(domain, userId, isOnline);
       res.status(200).json({ success: true });
     } catch (err) {
@@ -83,7 +82,6 @@ export const trackerSdkController = {
 
   saveBounceRateBeacon: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      console.log('sendOffline 수신됨', req.body);
       const { apiKey, userId, url } = req.body;
       const { domain } = await getClientDomain(apiKey);
       await userActionService.saveBounceRate(domain, userId, url);
@@ -95,7 +93,6 @@ export const trackerSdkController = {
 
   saveUserScrollDepthBeacon: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      console.log('sendScrollDepthBeacon', req.body);
       const { apiKey, url, scrollDepth, userId } = req.body;
       const { domain } = await getClientDomain(apiKey);
       await userActionService.saveUserScrollDepth({ domain, userId, scrollDepth, url });
