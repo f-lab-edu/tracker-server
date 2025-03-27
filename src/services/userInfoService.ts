@@ -40,7 +40,7 @@ export const userInfoService = {
   getVisitedUsersRate: async (domain: string) => {
     const totalUsers = await UserInfoModel.count({ where: { domain } });
     const visitedUsers = await UserInfoModel.count({
-      where: { domain, isVisitedUser: { [Op.gte]: 2 } },
+      where: { domain, visitedCount: { [Op.gte]: 2 } },
     });
     const visitedUsersRate = totalUsers > 0 ? (visitedUsers / totalUsers) * 100 : 0;
     return { domain, visitedUsersRate };

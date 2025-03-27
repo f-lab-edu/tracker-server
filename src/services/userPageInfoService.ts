@@ -38,7 +38,7 @@ export const userPageInfoService = {
 
   getReferrerStats: async (domain: string) => {
     const referrerCounts = await UserPageInfoModel.findAll({
-      where: { domain },
+      where: { domain, referrer: { [Op.ne]: null } },
       attributes: ['referrer', [sequelize.fn('COUNT', '*'), 'count']],
       group: ['referrer'],
       raw: true,
