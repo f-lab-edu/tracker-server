@@ -20,7 +20,9 @@ export const userPageInfoService = {
   },
 
   savePageInfo: async (data: PageInfo) => {
-    const today = new Date().toISOString().split('T')[0];
+    const now = new Date();
+    const today = new Date(now.getTime() + 9 * 60 * 60 * 1000).toISOString().slice(0, 10);
+    const pathname = new URL(data.url).pathname;
     await sequelize.query(
       `
       INSERT INTO userPageInfos (userId, domain, url, referrer, date, visitCount, createdAt, updatedAt)
@@ -30,7 +32,7 @@ export const userPageInfoService = {
         updatedAt = NOW();
       `,
       {
-        replacements: [data.userId, data.domain, data.url, null, today],
+        replacements: [data.userId, data.domain, pathname, null, today],
         type: QueryTypes.INSERT,
       }
     );
