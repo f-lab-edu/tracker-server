@@ -23,7 +23,6 @@ export const userPageInfoService = {
     const now = new Date();
     const today = new Date(now.getTime() + 9 * 60 * 60 * 1000).toISOString().slice(0, 10);
     const pathname = new URL(data.url).pathname;
-    console.log(today);
     await sequelize.query(
       `
       INSERT INTO userPageInfos (userId, domain, url, referrer, date, visitCount, createdAt, updatedAt)
