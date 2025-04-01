@@ -5,7 +5,7 @@ class UserPageInfo extends Model {}
 
 UserPageInfo.init(
   {
-    userId: { type: DataTypes.STRING, allowNull: false, primaryKey: true },
+    userId: { type: DataTypes.STRING, allowNull: false },
     domain: { type: DataTypes.STRING, allowNull: false },
     referrer: { type: DataTypes.STRING, allowNull: true },
     url: { type: DataTypes.STRING, allowNull: true },
