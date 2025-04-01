@@ -91,6 +91,7 @@ export const userPageInfoService = {
         },
       },
       attributes: [
+        'date',
         [sequelize.fn('SUM', sequelize.col('visitCount')), 'totalVisitCount'],
         [
           sequelize.fn('COUNT', sequelize.fn('DISTINCT', sequelize.col('userId'))),

@@ -45,24 +45,23 @@ export const userActionService = {
   },
 
   getPerPageBounceRate: async (domain: string) => {
-    const totalUsersPerPage = await UserActionModel.findAll({
-      where: { domain },
-      attributes: [
-        'url',
-        [sequelize.fn('COUNT', sequelize.literal('DISTINCT userId')), 'totalUsers'],
-      ],
-      group: ['url'],
-      raw: true,
-    });
     const bouncedUsersPerPage = await UserActionModel.findAll({
-      where: { domain, isBounced: true },
+      where: {
+        domain,
+        isBounced: true,
+      },
       attributes: [
-        'url',
+        [
+          sequelize.literal(`
+            SUBSTRING(url, LOCATE('/', url, LOCATE('//', url) + 2))
+          `),
+          'url',
+        ],
         [sequelize.fn('COUNT', sequelize.literal('DISTINCT userId')), 'bouncedUsers'],
       ],
       group: ['url'],
       raw: true,
     });
-    return { totalUsersPerPage, bouncedUsersPerPage };
+    return bouncedUsersPerPage;
   },
 };
