@@ -59,7 +59,7 @@ export const userActionService = {
         ],
         [sequelize.fn('COUNT', sequelize.literal('DISTINCT userId')), 'bouncedUsers'],
       ],
-      group: ['url'],
+      group: [`SUBSTRING(url, LOCATE('/', url, LOCATE('//', url) + 2))`],
       raw: true,
     });
     return bouncedUsersPerPage;
