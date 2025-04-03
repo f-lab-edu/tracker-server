@@ -10,6 +10,7 @@ UserInfo.init(
     domain: { type: DataTypes.STRING, allowNull: false },
     country: { type: DataTypes.STRING, allowNull: false },
     language: { type: DataTypes.STRING, allowNull: false },
+    visitDate: { type: DataTypes.DATEONLY, allowNull: false },
   },
   {
     sequelize,

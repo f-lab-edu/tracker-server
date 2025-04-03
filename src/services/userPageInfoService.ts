@@ -75,40 +75,4 @@ export const userPageInfoService = {
       raw: true,
     });
   },
-
-  getPerDayVisitorCounts: async (domain: string, startDate: string, endDate: string) => {
-    return await UserPageInfoModel.findAll({
-      where: {
-        domain,
-        date: {
-          [Op.between]: [startDate, endDate],
-        },
-      },
-      attributes: [
-        'date',
-        [sequelize.fn('SUM', sequelize.col('visitCount')), 'totalVisitCount'],
-        [
-          sequelize.fn('COUNT', sequelize.fn('DISTINCT', sequelize.col('userId'))),
-          'uniqueVisitors',
-        ],
-      ],
-      group: ['date'],
-      order: [['date', 'ASC']],
-      raw: true,
-    });
-  },
-
-  getTotalVisitors: async (domain: string) => {
-    return await UserPageInfoModel.findAll({
-      where: { domain },
-      attributes: [
-        [sequelize.fn('SUM', sequelize.col('visitCount')), 'totalVisitCount'],
-        [
-          sequelize.fn('COUNT', sequelize.fn('DISTINCT', sequelize.col('userId'))),
-          'uniqueVisitors',
-        ],
-      ],
-      raw: true,
-    });
-  },
 };

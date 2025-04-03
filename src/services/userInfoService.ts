@@ -1,10 +1,12 @@
+import { Op } from 'sequelize';
 import sequelize from '../config/db';
 import { UserInfoModel } from '../models/userInfoModel';
 import { UserInfo } from '../types/userInfoType';
 
 export const userInfoService = {
   saveUserInfo: async (data: UserInfo) => {
-    await UserInfoModel.create({ ...data });
+    const today = new Date().toISOString().slice(0, 10);
+    await UserInfoModel.create({ ...data, visitDate: today });
   },
 
   getLanguageStats: async (domain: string) => {
@@ -40,5 +42,41 @@ export const userInfoService = {
     });
     const visitedUsersRate = totalUsers > 0 ? (visitedUsers.length / totalUsers) * 100 : 0;
     return { domain, visitedUsersRate };
+  },
+
+  getPerDayVisitorCounts: async (domain: string, startDate: string, endDate: string) => {
+    return await UserInfoModel.findAll({
+      where: {
+        domain,
+        visitDate: {
+          [Op.between]: [startDate, endDate],
+        },
+      },
+      attributes: [
+        'visitDate',
+        [sequelize.fn('COUNT', sequelize.col('userId')), 'totalVisitCount'],
+        [
+          sequelize.fn('COUNT', sequelize.fn('DISTINCT', sequelize.col('userId'))),
+          'uniqueVisitors',
+        ],
+      ],
+      group: ['visitDate'],
+      order: [['visitDate', 'ASC']],
+      raw: true,
+    });
+  },
+
+  getTotalVisitors: async (domain: string) => {
+    return await UserInfoModel.findAll({
+      where: { domain },
+      attributes: [
+        [sequelize.fn('COUNT', sequelize.col('userId')), 'totalVisitCount'],
+        [
+          sequelize.fn('COUNT', sequelize.fn('DISTINCT', sequelize.col('userId'))),
+          'uniqueVisitors',
+        ],
+      ],
+      raw: true,
+    });
   },
 };

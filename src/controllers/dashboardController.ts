@@ -150,11 +150,7 @@ export const dashboardController = {
         res.status(400).json({ message: 'startDate와 endDate는 필수입니다.' });
         return;
       }
-      const visitorsData = await userPageInfoService.getPerDayVisitorCounts(
-        domain,
-        startDate,
-        endDate
-      );
+      const visitorsData = await userInfoService.getPerDayVisitorCounts(domain, startDate, endDate);
       res.status(200).json(visitorsData);
     } catch (err) {
       next(err);
@@ -164,7 +160,7 @@ export const dashboardController = {
   getTotalVisitors: async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     try {
       const domain = req.session.client.domain;
-      const totalVisitorsData = await userPageInfoService.getTotalVisitors(domain);
+      const totalVisitorsData = await userInfoService.getTotalVisitors(domain);
       res.status(200).json(totalVisitorsData);
     } catch (err) {
       next(err);
