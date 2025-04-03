@@ -1,48 +1,44 @@
-import { Op } from 'sequelize';
 import sequelize from '../config/db';
 import { UserInfoModel } from '../models/userInfoModel';
 import { UserInfo } from '../types/userInfoType';
 
 export const userInfoService = {
   saveUserInfo: async (data: UserInfo) => {
-    const existingUser = await UserInfoModel.findOne({
-      where: { userId: data.userId, domain: data.domain },
-    });
-    if (existingUser) {
-      await UserInfoModel.update(
-        { visitedCount: sequelize.literal('visitedCount + 1') },
-        { where: { userId: data.userId, domain: data.domain } }
-      );
-    } else {
-      const userInfo = await UserInfoModel.create({ ...data, visitedCount: 1 });
-      return userInfo;
-    }
+    await UserInfoModel.create({ ...data });
   },
 
   getLanguageStats: async (domain: string) => {
-    const languageStats = await UserInfoModel.findAll({
-      attributes: ['language', [sequelize.fn('COUNT', sequelize.col('language')), 'count']],
+    return await UserInfoModel.findAll({
+      attributes: ['language', [sequelize.fn('COUNT', '*'), 'count']],
       where: { domain },
       group: ['language'],
+      raw: true,
     });
-    return languageStats;
   },
 
   getCountryStats: async (domain: string) => {
-    const countryStats = await UserInfoModel.findAll({
-      attributes: ['country', [sequelize.fn('COUNT', sequelize.col('country')), 'count']],
+    return await UserInfoModel.findAll({
+      attributes: ['country', [sequelize.fn('COUNT', '*'), 'count']],
       where: { domain },
       group: ['country'],
+      raw: true,
     });
-    return countryStats;
   },
 
   getVisitedUsersRate: async (domain: string) => {
-    const totalUsers = await UserInfoModel.count({ where: { domain } });
-    const visitedUsers = await UserInfoModel.count({
-      where: { domain, visitedCount: { [Op.gte]: 2 } },
+    const visitedUsers = await UserInfoModel.findAll({
+      attributes: ['userId'],
+      where: { domain },
+      group: ['userId'],
+      having: sequelize.literal('COUNT(*) >= 2'),
+      raw: true,
     });
-    const visitedUsersRate = totalUsers > 0 ? (visitedUsers / totalUsers) * 100 : 0;
+    const totalUsers = await UserInfoModel.count({
+      where: { domain },
+      distinct: true,
+      col: 'userId',
+    });
+    const visitedUsersRate = totalUsers > 0 ? (visitedUsers.length / totalUsers) * 100 : 0;
     return { domain, visitedUsersRate };
   },
 };
