@@ -45,8 +45,9 @@ export const userPageInfoService = {
           `),
           'path',
         ],
-        [sequelize.fn('COUNT', '*'), 'count'],
+        [sequelize.fn('COUNT', sequelize.col('referrer')), 'count'],
       ],
+      group: ['path'],
       raw: true,
     });
     return referrerCounts;
