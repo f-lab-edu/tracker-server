@@ -1,6 +1,6 @@
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
-import express from 'express';
+import express, { ErrorRequestHandler } from 'express';
 import './config/dbConnection';
 import { dashboardCors } from './middleware/dashboardCors';
 import { errorHandle } from './middleware/errorHandle';
@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use('/dashboard', dashboardCors, createSession, dashboardRouter);
 app.use('/trackerSdk', sdkCors, trackerSdkRouter);
-app.use(errorHandle);
+app.use(errorHandle as ErrorRequestHandler);
 
 app.get('/', (req, res) => {
   res.send('tracker-sdk 서버 정상 작동 중!');
