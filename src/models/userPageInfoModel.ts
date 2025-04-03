@@ -9,7 +9,7 @@ UserPageInfo.init(
     domain: { type: DataTypes.STRING, allowNull: false, primaryKey: true },
     referrer: { type: DataTypes.STRING, allowNull: true },
     url: { type: DataTypes.STRING, allowNull: true, primaryKey: true },
-    visitCount: { type: DataTypes.INTEGER, allowNull: true },
+    visitCount: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 1 },
     date: { type: DataTypes.DATEONLY, allowNull: true, primaryKey: true },
   },
   {

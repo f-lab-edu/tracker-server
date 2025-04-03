@@ -5,18 +5,12 @@ import { PageInfo, PageInfoRefer } from '../types/userPageType';
 
 export const userPageInfoService = {
   saveReferrer: async (data: PageInfoRefer) => {
-    const existingRecord = await UserPageInfoModel.findOne({
-      where: { userId: data.userId, domain: data.domain },
+    const referrer = data.referrer || 'direct';
+    const newReferrer = await UserPageInfoModel.create({
+      ...data,
+      referrer,
     });
-    if (!existingRecord) {
-      const referrer = data.referrer || 'direct';
-      const firstTimeAccessPageInfo = await UserPageInfoModel.create({
-        ...data,
-        referrer,
-      });
-      return firstTimeAccessPageInfo;
-    }
-    return null;
+    return newReferrer;
   },
 
   savePageInfo: async (data: PageInfo) => {
