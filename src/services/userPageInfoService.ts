@@ -16,9 +16,7 @@ export const userPageInfoService = {
   savePageInfo: async (data: PageInfo) => {
     const now = new Date();
     const today = new Date(now.getTime() + 9 * 60 * 60 * 1000).toISOString().slice(0, 10);
-    console.log(data, 'savePageInfoData');
     const pathname = new URL(data.url).pathname;
-    console.log(pathname, 'savePageInfo', pathname);
     const existingPageInfo = await UserPageInfoModel.findOne({
       where: {
         domain: data.domain,
@@ -40,6 +38,7 @@ export const userPageInfoService = {
     } else {
       await UserPageInfoModel.create({
         ...data,
+        url: pathname,
         referrer: null,
         visitCount: 1,
         date: today,
