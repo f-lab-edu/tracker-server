@@ -41,13 +41,13 @@ export const userPageInfoService = {
       attributes: [
         [
           sequelize.literal(`
-            SUBSTRING(referrer, LOCATE('/', referrer, LOCATE('//', referrer) + 2))
+            SUBSTRING(referrer, LOCATE('//', referrer) + 2, LOCATE('/', referrer, LOCATE('//', referrer) + 2) - LOCATE('//', referrer) - 2)
           `),
-          'path',
+          'referrerDomain',
         ],
-        [sequelize.fn('COUNT', sequelize.col('referrer')), 'count'],
+        [sequelize.fn('SUM', sequelize.col('visitCount')), 'totalVisitCount'],
       ],
-      group: ['path'],
+      group: ['referrerDomain'],
       raw: true,
     });
     return referrerCounts;
