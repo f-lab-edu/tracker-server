@@ -57,7 +57,7 @@ export const userActionService = {
           `),
           'url',
         ],
-        [sequelize.fn('COUNT', sequelize.literal('DISTINCT userId')), 'bouncedUsers'],
+        [sequelize.fn('COUNT', '*'), 'bouncedUsers'],
       ],
       group: ['url'],
       raw: true,
