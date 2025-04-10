@@ -8,6 +8,7 @@ import { sdkCors } from './middleware/sdkCors';
 import { createSession } from './middleware/session';
 import { dashboardRouter } from './routes/dashboardRoutes';
 import { trackerSdkRouter } from './routes/trackerSdkRoutes';
+import { userConnectionService } from './services/userConnectionService';
 
 dotenv.config();
 const app = express();
@@ -25,4 +26,8 @@ app.get('/', (req, res) => {
 
 app.listen(port, () => {
   console.log(`🚀 서버 실행 중 👉 http://localhost:${port}`);
+  setInterval(() => {
+    userConnectionService.checkInactiveUsers();
+    console.log('🫀 Heartbeat inactive check 실행됨');
+  }, 30 * 1000);
 });

@@ -10,6 +10,7 @@ UserConnection.init(
     firstOnlineTime: { type: DataTypes.DATE, allowNull: false },
     lastUpdateTime: { type: DataTypes.DATE, allowNull: false },
     isOnline: { type: DataTypes.BOOLEAN, allowNull: false },
+    lastHeartbeatTime: { type: DataTypes.DATE, allowNull: true },
   },
   {
     sequelize,

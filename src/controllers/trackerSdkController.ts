@@ -17,8 +17,8 @@ export const trackerSdkController = {
         await userConnectionService.createIsOnline(domain, userId);
         res.status(201).json({ message: '초기 userConnection 기록 성공' });
       } else {
-        await userConnectionService.updateIsOnline(domain, userId, isOnline);
-        res.status(200).json({ message: 'userConnection 업데이트 성공' });
+        await userConnectionService.updateHeartbeat(domain, userId, isOnline);
+        res.status(200).json({ message: 'heartbeat online 업데이트 성공' });
       }
     } catch (err) {
       next(err);
