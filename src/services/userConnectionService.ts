@@ -45,11 +45,10 @@ export const userConnectionService = {
       attributes: ['domain'],
       group: ['domain'],
     });
-    console.log(' checkInactiveUsers 실행됨', new Date().toISOString());
     const threshold = new Date(Date.now() - 60 * 1000);
     for (const domainRow of domains) {
       const domain = domainRow.get('domain');
-      const [affectedCount] = await userConnectionModel.update(
+      await userConnectionModel.update(
         { isOnline: false },
         {
           where: {
@@ -59,7 +58,6 @@ export const userConnectionService = {
           },
         }
       );
-      console.log(`[${domain}] offline 처리된 유저 수: ${affectedCount}`);
     }
   },
 };

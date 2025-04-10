@@ -187,7 +187,7 @@ export const dashboardController = {
           console.error('세션 저장 실패:', err);
           return res.status(500).json({ message: '세션 저장 실패' });
         }
-        res.status(200).json({ message: '로그인 성공' });
+        res.status(200).json({ message: '로그인 성공', session: req.session.client });
       });
     } catch (err) {
       next(err);
