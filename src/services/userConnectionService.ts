@@ -54,8 +54,8 @@ export const userConnectionService = {
         {
           where: {
             domain,
-            lastHeartbeatTime: { [Op.lt]: threshold },
             isOnline: true,
+            [Op.or]: [{ lastHeartbeatTime: null }, { lastHeartbeatTime: { [Op.lt]: threshold } }],
           },
         }
       );
