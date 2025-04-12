@@ -5,7 +5,8 @@ import { UserInfo } from '../types/userInfoType';
 
 export const userInfoService = {
   saveUserInfo: async (data: UserInfo) => {
-    const today = new Date().toISOString().slice(0, 10);
+    const now = new Date();
+    const today = new Date(now.getTime() + 9 * 60 * 60 * 1000).toISOString().slice(0, 10);
     await UserInfoModel.create({ ...data, visitDate: today });
   },
 
