@@ -1,75 +1,30 @@
-import express, { RequestHandler } from 'express';
+import express from 'express';
 import { dashboardController } from '../controllers/dashboardController';
-import { ensureLogin } from '../middleware/ensureLogin';
+import { authenticateJWT } from '../middleware/authenticateJWT';
 
 export const dashboardRouter = express.Router();
 
-dashboardRouter.get(
-  '/onlineUsersCount',
-  ensureLogin,
-  dashboardController.getOnlineUsersCount as RequestHandler
-);
-dashboardRouter.get(
-  '/browsersStats',
-  ensureLogin,
-  dashboardController.getBrowserStats as RequestHandler
-);
-dashboardRouter.get('/osStats', ensureLogin, dashboardController.getOsStats as RequestHandler);
-dashboardRouter.get(
-  '/deviceStats',
-  ensureLogin,
-  dashboardController.getDeviceStats as RequestHandler
-);
-dashboardRouter.get(
-  '/resolutionStats',
-  ensureLogin,
-  dashboardController.getResolutionStats as RequestHandler
-);
-dashboardRouter.get(
-  '/languageStats',
-  ensureLogin,
-  dashboardController.getLanguageStats as RequestHandler
-);
-dashboardRouter.get(
-  '/countryStats',
-  ensureLogin,
-  dashboardController.getCountryStats as RequestHandler
-);
-dashboardRouter.get(
-  '/visitedRate',
-  ensureLogin,
-  dashboardController.getVisitedUsersRate as RequestHandler
-);
-dashboardRouter.get(
-  '/referrer',
-  ensureLogin,
-  dashboardController.getReferrerStats as RequestHandler
-);
+dashboardRouter.get('/onlineUsersCount', authenticateJWT, dashboardController.getOnlineUsersCount);
+dashboardRouter.get('/browsersStats', authenticateJWT, dashboardController.getBrowserStats);
+dashboardRouter.get('/osStats', authenticateJWT, dashboardController.getOsStats);
+dashboardRouter.get('/deviceStats', authenticateJWT, dashboardController.getDeviceStats);
+dashboardRouter.get('/resolutionStats', authenticateJWT, dashboardController.getResolutionStats);
+dashboardRouter.get('/languageStats', authenticateJWT, dashboardController.getLanguageStats);
+dashboardRouter.get('/countryStats', authenticateJWT, dashboardController.getCountryStats);
+dashboardRouter.get('/visitedRate', authenticateJWT, dashboardController.getVisitedUsersRate);
+dashboardRouter.get('/referrer', authenticateJWT, dashboardController.getReferrerStats);
 dashboardRouter.get(
   '/visitorsPageByPeriodCount',
-  ensureLogin,
-  dashboardController.getPageViewCount as RequestHandler
+  authenticateJWT,
+  dashboardController.getPageViewCount
 );
-dashboardRouter.get(
-  '/perPageAverageScrollDepth',
-  dashboardController.getPerPageAverageScrollDepth as RequestHandler
-);
-dashboardRouter.get(
-  '/bounceRate',
-  ensureLogin,
-  dashboardController.getPerPageBounceRate as RequestHandler
-);
+dashboardRouter.get('/perPageAverageScrollDepth', dashboardController.getPerPageAverageScrollDepth);
+dashboardRouter.get('/bounceRate', authenticateJWT, dashboardController.getPerPageBounceRate);
 dashboardRouter.get(
   '/visitorsByPeriodCount',
-  ensureLogin,
-  dashboardController.getVisitorsByPeriod as RequestHandler
+  authenticateJWT,
+  dashboardController.getVisitorsByPeriod
 );
-dashboardRouter.get(
-  '/totalVisitorsCount',
-  ensureLogin,
-  dashboardController.getTotalVisitors as RequestHandler
-);
+dashboardRouter.get('/totalVisitorsCount', authenticateJWT, dashboardController.getTotalVisitors);
 dashboardRouter.post('/enrollClient', dashboardController.enrollClient);
 dashboardRouter.post('/loginClient', dashboardController.loginClient);
-dashboardRouter.post('/logoutClient', dashboardController.logoutClient);
-dashboardRouter.get('/sessionClient', dashboardController.sessionClient);
