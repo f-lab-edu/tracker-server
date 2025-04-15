@@ -1,6 +1,6 @@
 import express from 'express';
 import { dashboardController } from '../controllers/dashboardController';
-import { authenticateJWT } from '../middleware/authenticateJWT';
+import { authenticateJWT } from '../middleware/authenticateJwt';
 
 export const dashboardRouter = express.Router();
 
