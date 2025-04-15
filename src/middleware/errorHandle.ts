@@ -15,6 +15,8 @@ export const errorHandle = (err: Error, req: Request, res: Response, next: NextF
   if (err.message === '회원가입 에러') {
     return res.status(409).json({ error: err.message });
   }
-
+  if (err.message === '토큰이 유효하지 않습니다.') {
+    return res.status(403).json({ error: err.message });
+  }
   return res.status(500).json({ message: '서버 내부 오류', err: err.message });
 };
