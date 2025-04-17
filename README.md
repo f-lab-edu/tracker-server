@@ -6,10 +6,16 @@
 
 ---
 
+## 인증 및 데이터 흐름
+
+![auth_data](https://github.com/user-attachments/assets/1456bf4b-6f3d-4488-b378-61680a3de8aa)
+
+---
+
 ## 🍀 배포링크
 
 - [SDK](https://www.npmjs.com/package/tracker-sdk-nemo?activeTab=readme)
-- [Dashboard](https://tracker-dashboard.site)
+- [Dashboard](https://tracker-dashboard.site/login)
 - [Server](https://tracker-server.site) _(서버 상태에 따라 접근이 제한될 수 있습니다.)_
 
 ---
