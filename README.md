@@ -6,6 +6,21 @@
 
 ---
 
+## 📺 기능 시연
+
+### PC 화면
+
+<p>
+<img src="https://github.com/user-attachments/assets/40407000-c101-49b0-9a94-87f034d03cca" width="70%" alt="pc"/>
+</p>
+
+### Mobile 화면
+
+<p>
+<img src="https://github.com/user-attachments/assets/db4376df-b7fe-41bb-b0b7-717d01b89d08" width="30%" alt="mobile"/>
+<p>
+---
+
 ## 인증 및 데이터 흐름
 
 ![auth_data](https://github.com/user-attachments/assets/1456bf4b-6f3d-4488-b378-61680a3de8aa)
